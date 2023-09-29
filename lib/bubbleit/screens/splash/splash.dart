@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../screens.dart';
-import '../consts/consts.dart';
 
 class SplashScreen extends StatefulWidget {
   static String routeName = '/';
