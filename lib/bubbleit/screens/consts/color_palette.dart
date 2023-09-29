@@ -1,6 +1,7 @@
 //create const of own palette color
 import 'dart:ui';
 
-const Color kItesoBlueStrong = Color(0x00050038);
-const Color kItesoBlue = Color(0x0000b5e6);
-const Color kItesoBlueLight = Color(0x00779bc0);
+const Color kItesoBlueStrong = Color(0xFF293163);
+const Color kItesoBlue = Color(0xFF779BC0);
+const Color kItesoBlueLight = Color(0xFF2D9BF0);
+const Color kItesoGray = Color(0xFF8a8b8d);
