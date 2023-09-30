@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 
 class ShoppingCartScreen extends StatefulWidget {
   const ShoppingCartScreen({super.key});
@@ -44,7 +45,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
           children: [
             SingleChildScrollView(
               child: Container(
-                color: const Color.fromARGB(255, 150, 205, 231),
+                color: kItesoBlue,
                 width: MediaQuery.of(context).size.width, // Ancho igual al ancho de la pantalla
                 height: MediaQuery.of(context).size.height, // Alto igual al alto de la pantalla
                 child: Column(
@@ -139,8 +140,17 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                         // Agrega aquí la lógica para lo que deseas hacer al tocar este área.
                       },
                       child: ElevatedButton(
+                        style: ButtonStyle(
+                          minimumSize: MaterialStateProperty.all(Size(200, 60)),
+                          backgroundColor: MaterialStateProperty.all(kItesoBlueLight),
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
                         onPressed: () {},
-                        child: const Text('Go to pay'),
+                        child: const Text('Go to pay', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white)),
                       ),
                     ),
                   ],

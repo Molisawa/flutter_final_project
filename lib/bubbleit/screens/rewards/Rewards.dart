@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 
 class RewardsScreen extends StatefulWidget {
   const RewardsScreen({super.key});
@@ -18,7 +19,7 @@ class _RewardsState extends State<RewardsScreen> {
       title: 'Material App',
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blueAccent,
+          backgroundColor: kItesoBlueLight,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -48,7 +49,7 @@ class _RewardsState extends State<RewardsScreen> {
         ),
         body: SingleChildScrollView(
           child: Container(
-            color: const Color.fromARGB(255, 150, 205, 231),
+            color: kItesoBlue,
             child: Column(
               children: [
                 Image.asset('assets/images/multipleDrinks_background.png'),
