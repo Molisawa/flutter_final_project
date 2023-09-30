@@ -40,7 +40,9 @@ class _RewardsState extends State<RewardsScreen> {
             IconButton(
               icon: const Icon(Icons.shopping_cart_outlined),
               iconSize: 25,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/shopping_cart');
+              },
             ),
           ],
         ),
@@ -124,7 +126,7 @@ class _RewardsState extends State<RewardsScreen> {
                   padding: const EdgeInsets.all(10),
                   child: Column(
                     children: [
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
@@ -151,6 +153,29 @@ class _RewardsState extends State<RewardsScreen> {
             ),
           ),
         ),
+        bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.blue, // Fondo azul
+        selectedItemColor: Colors.black, // Iconos seleccionados en blanco
+        unselectedItemColor: Colors.grey, // Iconos no seleccionados en blanco
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart),
+            label: 'Cart',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.payment),
+            label: 'Payment',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.redeem),
+            label: 'Rewards',
+          ),
+        ],
+      ),
       ),
     );
   }
