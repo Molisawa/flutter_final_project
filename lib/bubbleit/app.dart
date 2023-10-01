@@ -15,12 +15,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      initialRoute: ShoppingCartScreen.routeName,
+      initialRoute: ProductDetailScreen.routeName,
       routes: {
         HomeScreen.routeName: (_) => const HomeScreen(),
         LoginScreen.routeName: (_) => const LoginScreen(),
         RewardsScreen.routeName: (_) => const RewardsScreen(),
         ShoppingCartScreen.routeName: (_) => const ShoppingCartScreen(),
+        ProductDetailScreen.routeName: (_) =>  const ProductDetailScreen()
       },
     );
   }
