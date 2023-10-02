@@ -32,12 +32,6 @@ class _RewardsState extends State<RewardsScreen> {
                   style: TextStyle(fontWeight: FontWeight.bold)),
             ],
           ),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.shopping_cart_outlined),
@@ -49,6 +43,7 @@ class _RewardsState extends State<RewardsScreen> {
           ],
         ),
         body: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Container(
             color: kItesoBlue,
             child: Column(

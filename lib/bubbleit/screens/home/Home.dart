@@ -13,6 +13,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int currIndex = 0;
+  late PageController _pageController;
 
   final List<Widget> _screens = [
     HomeContent(),
@@ -22,14 +23,34 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kItesoBlue,
-      body: _screens[currIndex],
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            currIndex = index;
+          });
+        },
+        children: _screens,
+      ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.blue, // Fondo azul
-        selectedItemColor: Colors.black, // Iconos seleccionados en blanco
-        unselectedItemColor: Colors.grey, // Iconos no seleccionados en blanco
+        backgroundColor: Colors.blue,
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -50,9 +71,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
         currentIndex: currIndex,
         onTap: (index) {
-          setState(() {
-            currIndex = index;
-          });
+          _pageController.animateToPage(
+            index,
+            duration: Duration(milliseconds: 200),
+            curve: Curves.easeInOut,
+          );
         },
       ),
     );
@@ -74,13 +97,13 @@ class _HomeContentState extends State<HomeContent> {
     return CustomScrollView(
       slivers: [
         SliverAppBar(
-          backgroundColor:
-              Colors.transparent, // Color de fondo transparente inicial
-          expandedHeight: appBarHeight, // Altura expandida de la AppBar
+          backgroundColor: kItesoBlue, // Color de fondo transparente inicial
+
           elevation: 0, // Sin sombra
           pinned:
               true, // La AppBar se fija en la parte superior al hacer scroll
-          title: const Text('BubbleIT'), // Título del AppBar
+          title: const Text('BubbleIT'),
+          centerTitle: true, // Título del AppBar
           actions: [
             IconButton(
               icon: const Icon(Icons.shopping_cart),

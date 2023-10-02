@@ -18,8 +18,8 @@ class _OrderDetailScreen extends State<OrderDetailScreen> {
       debugShowCheckedModeBanner: false,
       title: 'Material App',
       home: Scaffold(
+        backgroundColor: kItesoBlue,
         appBar: AppBar(
-          backgroundColor: Colors.white,
           title: const Text(
             'Your Order',
             style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
@@ -47,153 +47,151 @@ class _OrderDetailScreen extends State<OrderDetailScreen> {
         ),
         body: Stack(
           children: [
-            SingleChildScrollView(
-              child: Container(
-                color: kItesoBlue,
-                width: MediaQuery.of(context)
-                    .size
-                    .width, // Ancho igual al ancho de la pantalla
-                height: MediaQuery.of(context)
-                    .size
-                    .height, // Alto igual al alto de la pantalla
-                child: Column(
-                  children: [
-                    const SizedBox(height: 20),
-                    Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      margin: const EdgeInsets.all(15),
-                      child: const Row(
+            Container(
+              color: kItesoBlue,
+              width: MediaQuery.of(context)
+                  .size
+                  .width, // Ancho igual al ancho de la pantalla
+              height: MediaQuery.of(context)
+                  .size
+                  .height, // Alto igual al alto de la pantalla
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    margin: const EdgeInsets.all(15),
+                    child: const Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                top: 20.0, left: 20, right: 10, bottom: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Payment Method',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        fontSize: 18)),
+                                SizedBox(
+                                  height: 24,
+                                ),
+                                Text("407561****0385",
+                                    style: TextStyle(color: Colors.black)),
+                                Text("no se ni para que sirve este texto",
+                                    style: TextStyle(color: Colors.black)),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    margin: const EdgeInsets.all(15),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 20.0, left: 20, right: 10, bottom: 20),
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  top: 20.0, left: 20, right: 10, bottom: 20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                          const Text('Order Details',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  fontSize: 18)),
+                          const SizedBox(height: 8),
+                          Table(
+                            columnWidths: const {
+                              0: FlexColumnWidth(5),
+                              1: FlexColumnWidth(1),
+                            },
+                            children: const [
+                              TableRow(
                                 children: [
-                                  Text('Payment Method',
+                                  Text("Products",
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold,
                                           color: Colors.black,
-                                          fontSize: 18)),
-                                  SizedBox(
-                                    height: 24,
-                                  ),
-                                  Text("407561****0385",
-                                      style: TextStyle(color: Colors.black)),
-                                  Text("no se ni para que sirve este texto",
-                                      style: TextStyle(color: Colors.black)),
+                                          fontWeight: FontWeight.bold)),
+                                  Text("\$100.30",
+                                      textAlign: TextAlign.end,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold))
                                 ],
                               ),
-                            ),
+                              // TODO: Integrate the ListView.builder for products here. You can convert each list item to a TableRow.
+                              TableRow(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 16.0, horizontal: 4.0),
+                                    child: Text("Coffe Bubble Tea",
+                                        style: TextStyle(
+                                            color: Colors.blue,
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 16.0, horizontal: 4.0),
+                                    child: Text("x1",
+                                        textAlign: TextAlign.end,
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                ],
+                              ),
+                              TableRow(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 16.0, horizontal: 4.0),
+                                    child: Text("Coffe Bubble Tea",
+                                        style: TextStyle(
+                                            color: Colors.blue,
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 16.0, horizontal: 4.0),
+                                    child: Text("x1",
+                                        textAlign: TextAlign.end,
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                ],
+                              ),
+                              // ... Add more product rows if needed
+                              TableRow(
+                                children: [
+                                  Text("Service Fee",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold)),
+                                  Text("\$6.90",
+                                      textAlign: TextAlign.end,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold))
+                                ],
+                              ),
+                            ],
                           ),
                         ],
                       ),
                     ),
-                    Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      margin: const EdgeInsets.all(15),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 20.0, left: 20, right: 10, bottom: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('Order Details',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    fontSize: 18)),
-                            const SizedBox(height: 8),
-                            Table(
-                              columnWidths: const {
-                                0: FlexColumnWidth(5),
-                                1: FlexColumnWidth(1),
-                              },
-                              children: const [
-                                TableRow(
-                                  children: [
-                                    Text("Products",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold)),
-                                    Text("\$100.30",
-                                        textAlign: TextAlign.end,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold))
-                                  ],
-                                ),
-                                // TODO: Integrate the ListView.builder for products here. You can convert each list item to a TableRow.
-                                TableRow(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 16.0, horizontal: 4.0),
-                                      child: Text("Coffe Bubble Tea",
-                                          style: TextStyle(
-                                              color: Colors.blue,
-                                              fontWeight: FontWeight.bold)),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 16.0, horizontal: 4.0),
-                                      child: Text("x1",
-                                          textAlign: TextAlign.end,
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold)),
-                                    ),
-                                  ],
-                                ),
-                                TableRow(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 16.0, horizontal: 4.0),
-                                      child: Text("Coffe Bubble Tea",
-                                          style: TextStyle(
-                                              color: Colors.blue,
-                                              fontWeight: FontWeight.bold)),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 16.0, horizontal: 4.0),
-                                      child: Text("x1",
-                                          textAlign: TextAlign.end,
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold)),
-                                    ),
-                                  ],
-                                ),
-                                // ... Add more product rows if needed
-                                TableRow(
-                                  children: [
-                                    Text("Service Fee",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold)),
-                                    Text("\$6.90",
-                                        textAlign: TextAlign.end,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold))
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             Positioned(
