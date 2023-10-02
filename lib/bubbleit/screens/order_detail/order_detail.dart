@@ -141,7 +141,8 @@ class _OrderDetailScreen extends State<OrderDetailScreen> {
                                               fontWeight: FontWeight.bold)),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.all(4.0),
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 16.0, horizontal: 4.0),
                                       child: Text("x1",
                                           textAlign: TextAlign.end,
                                           style: TextStyle(
@@ -161,7 +162,8 @@ class _OrderDetailScreen extends State<OrderDetailScreen> {
                                               fontWeight: FontWeight.bold)),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.all(4.0),
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 16.0, horizontal: 4.0),
                                       child: Text("x1",
                                           textAlign: TextAlign.end,
                                           style: TextStyle(
