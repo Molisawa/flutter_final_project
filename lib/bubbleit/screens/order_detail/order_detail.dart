@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 
-class ShoppingCartScreen extends StatefulWidget {
-  const ShoppingCartScreen({super.key});
-  static String routeName = '/shopping_cart';
+class OrderDetailScreen extends StatefulWidget {
+  const OrderDetailScreen({super.key});
+  static String routeName = '/order_detail';
 
   @override
-  State<ShoppingCartScreen> createState() => _ShoppingCartScreenState();
+  State<OrderDetailScreen> createState() => _OrderDetailScreen();
 }
 
-class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
+class _OrderDetailScreen extends State<OrderDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -61,57 +61,30 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       margin: const EdgeInsets.all(15),
-                      child: Row(
+                      child: const Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(
-                            width: 100, // Ancho de la imagen
-                            child: Image.asset(
-                              'assets/images/coffeeBubbleTea.png',
-                              fit: BoxFit
-                                  .cover, // Ajusta la imagen para que cubra toda la altura
-                            ),
-                          ),
-                          const Expanded(
+                          Expanded(
                             child: Padding(
                               padding: EdgeInsets.only(
                                   top: 20.0, left: 20, right: 10, bottom: 20),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Coffee BubbleTea',
+                                  Text('Payment Method',
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          color: Colors.black)),
-                                  Text('\$98.00',
+                                          color: Colors.black,
+                                          fontSize: 18)),
+                                  SizedBox(
+                                    height: 24,
+                                  ),
+                                  Text("407561****0385",
+                                      style: TextStyle(color: Colors.black)),
+                                  Text("no se ni para que sirve este texto",
                                       style: TextStyle(color: Colors.black)),
                                 ],
                               ),
-                            ),
-                          ),
-                          Container(
-                            // Contenedor para alinear los botones
-                            padding: const EdgeInsets.only(top: 100, right: 10),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                IconButton(
-                                  onPressed: () {},
-                                  icon:
-                                      const Icon(Icons.delete_outline_rounded),
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.all(13.0),
-                                  child: Text('1',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black)),
-                                ),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.add),
-                                ),
-                              ],
                             ),
                           ),
                         ],
@@ -137,7 +110,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Subtotal',
+                            'Total Due',
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -174,7 +147,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                           ),
                         ),
                         onPressed: () {},
-                        child: const Text('Go to pay',
+                        child: const Text('Place order',
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
