@@ -92,12 +92,39 @@ class HomeContent extends StatefulWidget {
 class _HomeContentState extends State<HomeContent> {
   double appBarHeight = 100.0;
 
+  ScrollController scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      setState(() {
+        // The listener will call setState whenever the scroll position changes.
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
+      controller: scrollController,
       slivers: [
         SliverAppBar(
-          backgroundColor: kItesoBlue, // Color de fondo transparente inicial
+          backgroundColor: () {
+            double blendFactor =
+                (scrollController.hasClients ? scrollController.offset : 0) /
+                    100.0;
+            blendFactor =
+                blendFactor.clamp(0.0, 1.0); // Ensure it's between 0 and 1
+            // Interpolate between the two colors based on the blend factor.
+            return Color.lerp(kItesoBlueLight, kItesoBlue, blendFactor)!;
+          }(), // Color de fondo transparente inicial
 
           elevation: 0, // Sin sombra
           pinned:
@@ -112,21 +139,6 @@ class _HomeContentState extends State<HomeContent> {
               },
             ),
           ],
-          flexibleSpace: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
-              // Calcula el valor de la altura máxima para la transición
-              appBarHeight = constraints.maxHeight;
-              // Calcula el color de fondo en función de la altura actual
-              final backgroundColor = appBarHeight < 100.0
-                  ? kItesoBlueLight
-                  : Colors.transparent; // Cambia este color al que desees
-              return Container(
-                decoration: BoxDecoration(
-                  color: backgroundColor,
-                ),
-              );
-            },
-          ),
         ),
         SliverToBoxAdapter(
           child: Column(

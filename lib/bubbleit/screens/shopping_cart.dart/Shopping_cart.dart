@@ -21,8 +21,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
           appBar: AppBar(
             title: const Text(
               'Your basket',
-              style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+              style: TextStyle(color: Colors.black),
             ),
             centerTitle: true,
             actions: const <Widget>[
