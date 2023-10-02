@@ -4,10 +4,24 @@ import 'package:flutter_final_project/bubbleit/widgets/custom_expansiontile.dart
 
 class ProductDescriptionWidget extends StatefulWidget {
   final List<String> milkOptions;
+  final List<String> toppingOptions;
+  final List<String> sizeOptions;
+  final List<String> sugarOptions;
+  String selectedMilk; // Elimina la palabra clave 'final' aquí
+  final String selectedTopping;
+  final String selectedSize;
+  final String selectedSugar;
 
-  const ProductDescriptionWidget({
+  ProductDescriptionWidget({
     Key? key,
-    required this.milkOptions, required String selectedMilk,
+    required this.milkOptions,
+    required this.selectedMilk,
+    required this.selectedTopping,
+    required this.selectedSize,
+    required this.selectedSugar,
+    required this.toppingOptions,
+    required this.sizeOptions,
+    required this.sugarOptions,
   }) : super(key: key);
 
   @override
@@ -16,8 +30,6 @@ class ProductDescriptionWidget extends StatefulWidget {
 }
 
 class _ProductDescriptionWidgetState extends State<ProductDescriptionWidget> {
-  String selectedMilk = ''; // Mueve la variable al estado
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -62,29 +74,42 @@ class _ProductDescriptionWidgetState extends State<ProductDescriptionWidget> {
             ),
           ),
           CustomExpansionTile(
-            selectedValue: selectedMilk,
+            titleText: 'Seleccione una leche',
+            selectedValue: widget.selectedMilk,
             options: widget.milkOptions,
             onChanged: (String value) {
               setState(() {
-                selectedMilk = value; // Actualiza el estado con la leche seleccionada
+                widget.selectedMilk = value;
               });
             },
           ),
           CustomExpansionTile(
-            selectedValue: selectedMilk,
-            options: widget.milkOptions,
+            titleText: 'Seleccione tipo de tapioca',
+            selectedValue: widget.selectedTopping,
+            options: widget.toppingOptions,
             onChanged: (String value) {
               setState(() {
-                selectedMilk = value; // Actualiza el estado con la leche seleccionada
+                widget.selectedMilk = value;
               });
             },
           ),
           CustomExpansionTile(
-            selectedValue: selectedMilk,
-            options: widget.milkOptions,
+            titleText: 'Seleccione un tamaño',
+            selectedValue: widget.selectedSize,
+            options: widget.sizeOptions,
             onChanged: (String value) {
               setState(() {
-                selectedMilk = value; // Actualiza el estado con la leche seleccionada
+                widget.selectedMilk = value;
+              });
+            },
+          ),
+          CustomExpansionTile(
+            titleText: 'Seleccione un nivel de azúcar',
+            selectedValue: widget.selectedSugar,
+            options: widget.sugarOptions,
+            onChanged: (String value) {
+              setState(() {
+                widget.selectedMilk = value;
               });
             },
           ),
