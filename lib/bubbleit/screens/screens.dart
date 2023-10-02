@@ -5,3 +5,4 @@ export 'package:flutter_final_project/bubbleit/screens/home/Home.dart';
 export 'package:flutter_final_project/bubbleit/screens/login/Login.dart';
 export 'package:flutter_final_project/bubbleit/screens/rewards/Rewards.dart';
 export 'package:flutter_final_project/bubbleit/screens/order_detail/order_detail.dart';
+export 'package:flutter_final_project/bubbleit/screens/map/map.dart';

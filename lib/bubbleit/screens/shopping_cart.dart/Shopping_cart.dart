@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
+import 'package:flutter_final_project/bubbleit/screens/screens.dart';
 
 class ShoppingCartScreen extends StatefulWidget {
   const ShoppingCartScreen({super.key});
@@ -23,12 +24,6 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
             style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
           ),
           centerTitle: true,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
           actions: const <Widget>[
             Column(
               children: [
@@ -174,7 +169,13 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                             ),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: ((context) =>
+                                      const OrderDetailScreen())));
+                        },
                         child: const Text('Go to pay',
                             style: TextStyle(
                                 fontSize: 20,

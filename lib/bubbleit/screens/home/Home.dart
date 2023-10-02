@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _screens = [
     HomeContent(),
     ShoppingCartScreen(),
-    OrderDetailScreen(),
+    MapScreen(),
     RewardsScreen()
   ];
 
@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
             label: 'Cart',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.payment),
+            icon: Icon(Icons.place_rounded),
             label: 'Payment',
           ),
           BottomNavigationBarItem(
