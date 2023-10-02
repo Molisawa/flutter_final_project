@@ -22,6 +22,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
             'Your basket',
             style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
           ),
+          centerTitle: true,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 
 class OrderDetailScreen extends StatefulWidget {
-  const OrderDetailScreen({super.key});
+  const OrderDetailScreen({
+    super.key,
+  });
   static String routeName = '/order_detail';
 
   @override
@@ -19,9 +21,10 @@ class _OrderDetailScreen extends State<OrderDetailScreen> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           title: const Text(
-            'Your basket',
+            'Your Order',
             style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
           ),
+          centerTitle: true,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {
@@ -88,6 +91,103 @@ class _OrderDetailScreen extends State<OrderDetailScreen> {
                             ),
                           ),
                         ],
+                      ),
+                    ),
+                    Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      margin: const EdgeInsets.all(15),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 20.0, left: 20, right: 10, bottom: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Order Details',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 18)),
+                            const SizedBox(height: 8),
+                            Table(
+                              columnWidths: const {
+                                0: FlexColumnWidth(5),
+                                1: FlexColumnWidth(1),
+                              },
+                              children: const [
+                                TableRow(
+                                  children: [
+                                    Text("Products",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold)),
+                                    Text("\$100.30",
+                                        textAlign: TextAlign.end,
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold))
+                                  ],
+                                ),
+                                // TODO: Integrate the ListView.builder for products here. You can convert each list item to a TableRow.
+                                TableRow(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 16.0, horizontal: 4.0),
+                                      child: Text("Coffe Bubble Tea",
+                                          style: TextStyle(
+                                              color: Colors.blue,
+                                              fontWeight: FontWeight.bold)),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(4.0),
+                                      child: Text("x1",
+                                          textAlign: TextAlign.end,
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold)),
+                                    ),
+                                  ],
+                                ),
+                                TableRow(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 16.0, horizontal: 4.0),
+                                      child: Text("Coffe Bubble Tea",
+                                          style: TextStyle(
+                                              color: Colors.blue,
+                                              fontWeight: FontWeight.bold)),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(4.0),
+                                      child: Text("x1",
+                                          textAlign: TextAlign.end,
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold)),
+                                    ),
+                                  ],
+                                ),
+                                // ... Add more product rows if needed
+                                TableRow(
+                                  children: [
+                                    Text("Service Fee",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold)),
+                                    Text("\$6.90",
+                                        textAlign: TextAlign.end,
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold))
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
