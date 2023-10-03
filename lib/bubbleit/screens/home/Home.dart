@@ -168,21 +168,27 @@ class _HomeContentState extends State<HomeContent> {
                 'Specials',
                 'Favorites'
               ])
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        sectionTitle,
-                        style: const TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(
+                        context, '/product_detail');
+                  },
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          sectionTitle,
+                          style: const TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 12.0),
-                    const CustomSlider(),
-                  ],
+                      const SizedBox(height: 12.0),
+                      const CustomSlider(),
+                    ],
+                  ),
                 ),
             ],
           ),
