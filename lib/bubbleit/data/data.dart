@@ -21,7 +21,7 @@ const String BubbleIT = '''[
     "milk": "Light",
     "size": "Large",
     "sugar": "Light",
-    "levelTapioca": "2",
+    "levelTapioca": 2
   },
   {
     "image": "assets/images/coffeeBubbleTea.png",
@@ -33,7 +33,7 @@ const String BubbleIT = '''[
     "milk": "Regular",
     "size": "Large",
     "sugar": "Regular",
-    "levelTapioca": "1",
-  },
+    "levelTapioca": 1
+  }
   
 ]''';
