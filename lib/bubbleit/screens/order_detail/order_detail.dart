@@ -29,7 +29,7 @@ class _OrderDetailScreen extends State<OrderDetailScreen> {
           ),
           centerTitle: true,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -255,6 +255,9 @@ class _OrderDetailScreen extends State<OrderDetailScreen> {
                             title: 'Order puesta',
                             message: 'Tu orden ha sido puesta',
                             duration: const Duration(seconds: 3),
+                            backgroundColor: kItesoBlue,
+                            margin: const EdgeInsets.all(8),
+                            borderRadius: BorderRadius.circular(8),
                           ).show(context);
                           setState(() {
                             _isOrderPlaced = true;

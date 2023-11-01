@@ -30,6 +30,7 @@ class LoginForm extends StatelessWidget {
                 transitionDuration: duration,
               ),
             );
+
           },
           backgroundColor: kItesoBlueLight,
         ),

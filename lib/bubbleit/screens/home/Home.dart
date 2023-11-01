@@ -1,5 +1,7 @@
 // import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:another_flushbar/flushbar.dart';
+import 'package:flutter_final_project/bubbleit/data/data.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 import 'package:flutter_final_project/bubbleit/screens/screens.dart';
 import 'package:flutter_final_project/bubbleit/widgets/widgets.dart';
@@ -16,19 +18,26 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int currIndex = 0;
   late PageController _pageController;
+  
 
-  final List<Widget> _screens = [
-    HomeContent(),
-    ShoppingCartScreen(),
-    MapScreen(),
-    RewardsScreen()
-  ];
+  final List<Widget> _screens = [];
 
   @override
   void initState() {
-    super.initState();
+    
+   
+    
     _pageController = PageController();
     _requestBasePermissions();
+
+    // Initialize HomeContent with the product data
+    _screens.addAll([
+      HomeContent(),
+      ShoppingCartScreen(),
+      MapScreen(),
+      RewardsScreen(),
+    ]);
+    super.initState();
   }
 
   @override
@@ -113,15 +122,15 @@ Future<void> _requestBasePermissions() async {
 }
 
 class HomeContent extends StatefulWidget {
-  const HomeContent({super.key});
+  HomeContent({super.key});
 
   @override
   State<HomeContent> createState() => _HomeContentState();
 }
 
 class _HomeContentState extends State<HomeContent> {
+  List<dynamic> products = [];
   double appBarHeight = 100.0;
-
   ScrollController scrollController = ScrollController();
 
   @override
@@ -132,6 +141,7 @@ class _HomeContentState extends State<HomeContent> {
         // The listener will call setState whenever the scroll position changes.
       });
     });
+    products = jsonDecode(BubbleIT);
   }
 
   @override
@@ -157,9 +167,9 @@ class _HomeContentState extends State<HomeContent> {
           }(), // Color de fondo transparente inicial
 
           elevation: 0, // Sin sombra
-          pinned:
-              true, // La AppBar se fija en la parte superior al hacer scroll
-          title: const Text('BubbleIT', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          pinned: true, // La AppBar se fija en la parte superior al hacer scroll
+          title: const Text('BubbleIT',
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
           centerTitle: true, // Título del AppBar
         ),
         SliverToBoxAdapter(
@@ -171,14 +181,12 @@ class _HomeContentState extends State<HomeContent> {
                   borderRadius: BorderRadius.circular(12.0),
                 ),
                 child: SizedBox(
-                  width: double
-                      .infinity, // Ancho de la tarjeta al ancho completo de la pantalla
+                  width: double.infinity,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12.0),
                     child: Image.asset(
-                      'assets/images/welcome_banner.png', // Reemplaza 'tu_imagen.jpg' con la ruta correcta de tu imagen en los activos
-                      fit: BoxFit
-                          .cover, // Ajusta la imagen al tamaño de la tarjeta
+                      'assets/images/welcome_banner.png',
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
@@ -192,8 +200,7 @@ class _HomeContentState extends State<HomeContent> {
               ])
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(
-                        context, '/product_detail');
+                    Navigator.pushNamed(context, '/product_detail');
                   },
                   child: Column(
                     children: [
@@ -208,7 +215,7 @@ class _HomeContentState extends State<HomeContent> {
                         ),
                       ),
                       const SizedBox(height: 12.0),
-                      const CustomSlider(),
+                      CustomSlider(products: products), // Use all products
                     ],
                   ),
                 ),
