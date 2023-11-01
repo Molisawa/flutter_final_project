@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-=======
 // import 'package:flutter/material.dart';
 import 'dart:convert';
->>>>>>> 261f3648167e2245b34da1f1ead36315c154f570
 import 'package:flutter_final_project/bubbleit/data/data.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 import 'package:flutter_final_project/bubbleit/screens/screens.dart';
@@ -21,24 +18,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int currIndex = 0;
   late PageController _pageController;
-  
 
-<<<<<<< HEAD
-  final List<Widget> _screens = [
-    const HomeContent(),
-    const ShoppingCartScreen(),
-    const MapScreen(),
-    const RewardsScreen()
-  ];
-=======
   final List<Widget> _screens = [];
->>>>>>> 261f3648167e2245b34da1f1ead36315c154f570
 
   @override
   void initState() {
-    
-   
-    
     _pageController = PageController();
     _requestBasePermissions();
 
@@ -182,17 +166,11 @@ class _HomeContentState extends State<HomeContent> {
           }(), // Color de fondo transparente inicial
 
           elevation: 0, // Sin sombra
-<<<<<<< HEAD
           pinned:
               true, // La AppBar se fija en la parte superior al hacer scroll
           title: const Text('BubbleIT',
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-=======
-          pinned: true, // La AppBar se fija en la parte superior al hacer scroll
-          title: const Text('BubbleIT',
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
->>>>>>> 261f3648167e2245b34da1f1ead36315c154f570
           centerTitle: true, // Título del AppBar
           leading: IconButton(
             icon: const Icon(Icons.menu),
