@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import '../../widgets/login_form.dart';
+import '../consts/consts.dart';
+import '../screens.dart';
 
 class LoginScreen extends StatefulWidget {
-  static String routeName = '/';
+  static String routeName = '/login';
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
@@ -13,20 +16,40 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Inicio de Sesión'),
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            Navigator.pushNamed(context, SettingsScreen.routeName);
+          },
+        ),
       ),
+      backgroundColor: kItesoBlue,
       body: SingleChildScrollView(
-        child: Container(
-          decoration: const BoxDecoration(
-            color: Color(0x00050038), // Utiliza el color definido en tus constantes
-          ),
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: <Widget>[
-                  Card(
-                    elevation: 8.0,
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              top: 100.0,
+              left: 16.0,
+              right: 16.0,
+              bottom: 16.0,
+            ),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Card(
+                    elevation: 0.0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0),
                     ),
@@ -39,34 +62,20 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20.0),
-                  const TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Usuario',
-                      border: OutlineInputBorder(),
-                    ),
+                ),
+                const SizedBox(height: 20.0),
+                const Text(
+                  'Sign In',
+                  style: TextStyle(
+                    fontSize: 48.0,
+                    fontWeight: FontWeight.bold,
+                    color: kItesoBlueStrong,
                   ),
-                  const SizedBox(height: 12.0),
-                  const TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: 'Contraseña',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                  const SizedBox(height: 20.0),
-                  SizedBox(
-                    width: double.infinity, // Ancho máximo
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Aquí puedes agregar la lógica para el inicio de sesión
-                      },
-                      child: const Text('Ingresar'),
-                    ),
-                  ),
-                  const SizedBox(height: 16.0), // Espacio adicional para evitar el desbordamiento inferior
-                ],
-              ),
+                ),
+                const SizedBox(height: 20.0),
+                LoginForm(),
+                const SizedBox(height: 16.0),
+              ],
             ),
           ),
         ),
