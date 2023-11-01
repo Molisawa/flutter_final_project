@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
-import 'package:flutter_final_project/bubbleit/screens/screens.dart';
 
 class ShoppingCartScreen extends StatefulWidget {
+  // ignore: use_key_in_widget_constructors
   const ShoppingCartScreen({Key? key});
   static String routeName = '/shopping_cart';
 
@@ -13,16 +13,17 @@ class ShoppingCartScreen extends StatefulWidget {
 class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   @override
   Widget build(BuildContext context) {
+    
     return CustomScrollView(
       slivers: <Widget>[
-        SliverAppBar(
+        const SliverAppBar(
           backgroundColor: kItesoBlueLight,
-          title: const Text(
+          title: Text(
             'Your basket',
             style: TextStyle(color: Colors.black),
           ),
           centerTitle: true,
-          actions: const <Widget>[
+          actions: <Widget>[
             Column(
               children: [
                 SizedBox(height: 20),

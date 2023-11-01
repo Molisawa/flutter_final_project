@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../widgets/login_form.dart';
 import '../consts/consts.dart';
+import '../screens.dart';
 
 class LoginScreen extends StatefulWidget {
   static String routeName = '/login';
@@ -14,6 +15,14 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            Navigator.pushNamed(context, SettingsScreen.routeName);
+          },
+        ),
+      ),
       backgroundColor: kItesoBlue,
       body: SingleChildScrollView(
         child: Center(

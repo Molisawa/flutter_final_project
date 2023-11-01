@@ -6,3 +6,4 @@ const Color kItesoBlue = Color(0xFF779BC0);
 const Color kItesoBlueLight = Color(0xFF2D9BF0);
 const Color kItesoGray = Color(0xFF8a8b8d);
 const Color kItesoGrayLight = Color(0xFFE6E6E6);
+const Color kItesoBlueDark = Color(0xFF0F1B2B);
