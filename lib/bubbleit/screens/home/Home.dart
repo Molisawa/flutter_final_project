@@ -1,5 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:another_flushbar/flushbar.dart';
+<<<<<<< HEAD
+=======
+// import 'package:flutter/material.dart';
+import 'dart:convert';
+>>>>>>> 261f3648167e2245b34da1f1ead36315c154f570
+import 'package:flutter_final_project/bubbleit/data/data.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 import 'package:flutter_final_project/bubbleit/screens/screens.dart';
 import 'package:flutter_final_project/bubbleit/widgets/widgets.dart';
@@ -17,19 +21,35 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int currIndex = 0;
   late PageController _pageController;
+  
 
+<<<<<<< HEAD
   final List<Widget> _screens = [
     const HomeContent(),
     const ShoppingCartScreen(),
     const MapScreen(),
     const RewardsScreen()
   ];
+=======
+  final List<Widget> _screens = [];
+>>>>>>> 261f3648167e2245b34da1f1ead36315c154f570
 
   @override
   void initState() {
-    super.initState();
+    
+   
+    
     _pageController = PageController();
     _requestBasePermissions();
+
+    // Initialize HomeContent with the product data
+    _screens.addAll([
+      const HomeContent(),
+      const ShoppingCartScreen(),
+      const MapScreen(),
+      const RewardsScreen(),
+    ]);
+    super.initState();
   }
 
   @override
@@ -119,8 +139,8 @@ class HomeContent extends StatefulWidget {
 }
 
 class _HomeContentState extends State<HomeContent> {
+  List<dynamic> products = [];
   double appBarHeight = 100.0;
-
   ScrollController scrollController = ScrollController();
 
   @override
@@ -131,6 +151,7 @@ class _HomeContentState extends State<HomeContent> {
         // The listener will call setState whenever the scroll position changes.
       });
     });
+    products = jsonDecode(BubbleIT);
   }
 
   @override
@@ -161,11 +182,17 @@ class _HomeContentState extends State<HomeContent> {
           }(), // Color de fondo transparente inicial
 
           elevation: 0, // Sin sombra
+<<<<<<< HEAD
           pinned:
               true, // La AppBar se fija en la parte superior al hacer scroll
           title: const Text('BubbleIT',
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+=======
+          pinned: true, // La AppBar se fija en la parte superior al hacer scroll
+          title: const Text('BubbleIT',
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+>>>>>>> 261f3648167e2245b34da1f1ead36315c154f570
           centerTitle: true, // Título del AppBar
           leading: IconButton(
             icon: const Icon(Icons.menu),
@@ -184,14 +211,12 @@ class _HomeContentState extends State<HomeContent> {
                   borderRadius: BorderRadius.circular(12.0),
                 ),
                 child: SizedBox(
-                  width: double
-                      .infinity, // Ancho de la tarjeta al ancho completo de la pantalla
+                  width: double.infinity,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12.0),
                     child: Image.asset(
-                      'assets/images/welcome_banner.png', // Reemplaza 'tu_imagen.jpg' con la ruta correcta de tu imagen en los activos
-                      fit: BoxFit
-                          .cover, // Ajusta la imagen al tamaño de la tarjeta
+                      'assets/images/welcome_banner.png',
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
@@ -220,7 +245,7 @@ class _HomeContentState extends State<HomeContent> {
                         ),
                       ),
                       const SizedBox(height: 12.0),
-                      const CustomSlider(),
+                      CustomSlider(products: products), // Use all products
                     ],
                   ),
                 ),

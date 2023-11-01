@@ -6,7 +6,7 @@ class CustomExpansionTile extends StatefulWidget {
   final List<String> options;
   final ValueChanged<String> onChanged;
 
-  CustomExpansionTile({
+  const CustomExpansionTile({
     Key? key,
     required this.titleText,
     required this.selectedValue,

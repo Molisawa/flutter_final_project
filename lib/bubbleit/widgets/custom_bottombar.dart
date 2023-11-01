@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 
 class BottomBarWidget extends StatefulWidget {
+  const BottomBarWidget({super.key});
+
   @override
   _BottomBarWidgetState createState() => _BottomBarWidgetState();
 }
 
 class _BottomBarWidgetState extends State<BottomBarWidget> {
   int itemCount = 1;
+  bool isButtonActivated = false;
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +82,7 @@ class _BottomBarWidgetState extends State<BottomBarWidget> {
               ),
               onPressed: () {
                 // Acción cuando se presiona el botón azul
+                isButtonActivated ? null :
                 Flushbar(
                   title: 'Añadido al carrito',
                   message: 'Se ha añadido el producto al carrito',
@@ -86,7 +90,10 @@ class _BottomBarWidgetState extends State<BottomBarWidget> {
                   backgroundColor: kItesoBlue,
                   margin: const EdgeInsets.all(8),
                   borderRadius: BorderRadius.circular(8),
-                )..show(context);
+                ).show(context);
+                setState(() {
+                  isButtonActivated = true;
+                });
               },
               child: const Text(
                 'Add \$19.89',

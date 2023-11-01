@@ -30,7 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  provider: ^6.0.1 # Agrega la última versión de provider
+  # Agrega la última versión de provider
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -39,6 +39,7 @@ dependencies:
   location: ^5.0.3
   another_flushbar: ^1.12.30
   animated_text_kit: ^4.2.2
+  provider: ^6.0.5
 
 dev_dependencies:
   flutter_test:

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 
 class RewardsScreen extends StatefulWidget {
-  const RewardsScreen({Key? key});
+  const RewardsScreen({super.key, Key? key});
   static String routeName = '/rewards';
 
   @override
