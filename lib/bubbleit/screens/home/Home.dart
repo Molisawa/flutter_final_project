@@ -1,7 +1,9 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 import 'package:flutter_final_project/bubbleit/screens/screens.dart';
 import 'package:flutter_final_project/bubbleit/widgets/widgets.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class HomeScreen extends StatefulWidget {
   static String routeName = '/home';
@@ -26,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _pageController = PageController();
+    _requestBasePermissions();
   }
 
   @override
@@ -33,6 +36,31 @@ class _HomeScreenState extends State<HomeScreen> {
     _pageController.dispose();
     super.dispose();
   }
+
+  Future<PermissionStatus> _requestPermissionStorage() async {
+    return await Permission.storage.request();
+  }
+  
+  // Future<PermissionStatus> _requestPermissionNotifications() async {
+  //   return await Permission.notification.request();
+  // }
+
+Future<void> _requestBasePermissions() async {
+  PermissionStatus storage = await _requestPermissionStorage();
+
+  while (storage != PermissionStatus.granted ) {
+    if (storage.isPermanentlyDenied ) {
+      print("Permissions permanently denied.");
+      return ; // Break the loop if any permission is permanently denied.
+    }
+    // Request permissions again.
+    storage = await _requestPermissionStorage();
+  }
+
+  if (storage.isGranted) {
+    // Permissions are granted.
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.place_rounded),
-            label: 'Payment',
+            label: 'Map',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.redeem),
@@ -80,6 +108,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+  
+  
 }
 
 class HomeContent extends StatefulWidget {
@@ -129,16 +159,8 @@ class _HomeContentState extends State<HomeContent> {
           elevation: 0, // Sin sombra
           pinned:
               true, // La AppBar se fija en la parte superior al hacer scroll
-          title: const Text('BubbleIT'),
+          title: const Text('BubbleIT', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
           centerTitle: true, // Título del AppBar
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.shopping_cart),
-              onPressed: () {
-                // Agrega la funcionalidad del carrito aquí
-              },
-            ),
-          ],
         ),
         SliverToBoxAdapter(
           child: Column(

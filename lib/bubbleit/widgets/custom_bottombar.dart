@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 
@@ -78,6 +79,14 @@ class _BottomBarWidgetState extends State<BottomBarWidget> {
               ),
               onPressed: () {
                 // Acción cuando se presiona el botón azul
+                Flushbar(
+                  title: 'Añadido al carrito',
+                  message: 'Se ha añadido el producto al carrito',
+                  duration: const Duration(seconds: 3),
+                  backgroundColor: kItesoBlue,
+                  margin: const EdgeInsets.all(8),
+                  borderRadius: BorderRadius.circular(8),
+                )..show(context);
               },
               child: const Text(
                 'Add \$19.89',

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 import 'package:flutter_final_project/bubbleit/widgets/custom_expansiontile.dart';
 
+// ignore: must_be_immutable
 class ProductDescriptionWidget extends StatefulWidget {
   final List<String> milkOptions;
   final List<String> toppingOptions;

@@ -1,8 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-class MapScreen extends StatelessWidget {
+class MapScreen extends StatefulWidget {
   const MapScreen({Key? key}) : super(key: key);
   static String routeName = '/map';
+
+  @override
+  State<MapScreen> createState() => _MapScreenState();
+}
+
+class _MapScreenState extends State<MapScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _requestLocationPermission();
+  }
+
+  Future<void> _requestLocationPermission() async {
+  PermissionStatus status = await Permission.location.request();
+
+  while (status != PermissionStatus.granted) {
+    if(status.isPermanentlyDenied){
+      print("Location permissions permanently denied.");
+      return ; // Break the loop if the user has permanently denied location permission.
+    }
+    status = await Permission.location.request();
+  }
+
+  if (status.isGranted) {
+    // Location permissions are granted, you can perform location-related actions here.
+  } 
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

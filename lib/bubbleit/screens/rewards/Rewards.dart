@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 
 class RewardsScreen extends StatefulWidget {
-  const RewardsScreen({super.key});
+  const RewardsScreen({Key? key});
   static String routeName = '/rewards';
 
   @override
@@ -11,44 +11,50 @@ class RewardsScreen extends StatefulWidget {
 
 class _RewardsState extends State<RewardsScreen> {
   int counterPoints = 0;
+  ScrollController scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Material App',
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: kItesoBlueLight,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconButton(
-                onPressed: () {},
-                icon: Image.asset('assets/images/rewardsIcon.png'),
-                iconSize: 60,
-              ),
-              const Text('Rewards',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-            ],
-          ),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.shopping_cart_outlined),
-              iconSize: 25,
-              onPressed: () {
-                Navigator.pushNamed(context, '/shopping_cart');
-              },
-            ),
-          ],
+    return CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          backgroundColor: () {
+            double blendFactor =
+                (scrollController.hasClients ? scrollController.offset : 0) /
+                    100.0;
+            blendFactor =
+                blendFactor.clamp(0.0, 1.0);
+            return Color.lerp(kItesoBlueLight, kItesoBlue, blendFactor)!;
+          }(),
+          elevation: 0,
+          pinned: true,
+          title: const Text('Rewards', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          centerTitle: true,
         ),
-        body: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
+
+        SliverToBoxAdapter(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: 200,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/multipleDrinks_background.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ),
+        SliverToBoxAdapter(
           child: Container(
             color: kItesoBlue,
             child: Column(
               children: [
-                Image.asset('assets/images/multipleDrinks_background.png'),
                 const SizedBox(height: 20),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.9,
@@ -60,16 +66,9 @@ class _RewardsState extends State<RewardsScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Your Points',
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.lightBlueAccent)),
-                      Text('$counterPoints',
-                          style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blueAccent)),
+                      const Text('Your Points', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.lightBlueAccent)),
+                      Text('$counterPoints', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blueAccent),
+                      ),
                     ],
                   ),
                 ),
@@ -80,14 +79,12 @@ class _RewardsState extends State<RewardsScreen> {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  // Text('Buy two Cofee Bubble Tea', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   padding: const EdgeInsets.all(10),
                   child: Column(
                     children: [
                       const Row(
-                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Buy two Cofee Bubble Tea',
+                          Text('Buy two Coffee Bubble Tea',
                               style: TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold,
@@ -101,20 +98,18 @@ class _RewardsState extends State<RewardsScreen> {
                             children: [
                               Image.asset('assets/images/coffeeBubbleTea.png',
                                   height: 100,
-                                  width: 93), // Reducir el ancho de la imagen
+                                  width: 93),
                               Image.asset('assets/images/coffeeBubbleTea.png',
                                   height: 100,
-                                  width: 93), // Reducir el ancho de la imagen
-
+                                  width: 93),
                               const Text('=',
                                   style: TextStyle(
                                       fontSize: 80,
-                                      fontWeight: FontWeight
-                                          .bold)), // Reducir el ancho de la imagen
+                                      fontWeight: FontWeight.bold)),
                               Image.asset(
-                                'assets/images/keychain.png', // Ruta de la otra imagen
-                                height: 120, // Altura de la otra imagen
-                                width: 100, // Ancho de la otra imagen
+                                'assets/images/keychain.png',
+                                height: 120,
+                                width: 100,
                               ),
                             ],
                           ),
@@ -136,7 +131,6 @@ class _RewardsState extends State<RewardsScreen> {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  // Text('Buy two Cofee Bubble Tea', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   padding: const EdgeInsets.all(10),
                   child: Column(
                     children: [
@@ -173,8 +167,7 @@ class _RewardsState extends State<RewardsScreen> {
             ),
           ),
         ),
-        //---------------------------------------------------------------quien replico la barra de navegacion, se paso de verga
-      ),
+      ],
     );
   }
 }

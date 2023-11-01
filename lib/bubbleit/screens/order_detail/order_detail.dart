@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 
@@ -12,6 +13,8 @@ class OrderDetailScreen extends StatefulWidget {
 }
 
 class _OrderDetailScreen extends State<OrderDetailScreen> {
+  bool _isOrderPlaced = false;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,7 +25,7 @@ class _OrderDetailScreen extends State<OrderDetailScreen> {
         appBar: AppBar(
           title: const Text(
             'Your Order',
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
           ),
           centerTitle: true,
           leading: IconButton(
@@ -38,7 +41,7 @@ class _OrderDetailScreen extends State<OrderDetailScreen> {
                 Text(
                   'Empty',
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.black),
+                      fontWeight: FontWeight.bold, color: Colors.white),
                 ),
               ],
             ),
@@ -246,7 +249,17 @@ class _OrderDetailScreen extends State<OrderDetailScreen> {
                             ),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          _isOrderPlaced ? null : 
+                          Flushbar(
+                            title: 'Order puesta',
+                            message: 'Tu orden ha sido puesta',
+                            duration: const Duration(seconds: 3),
+                          ).show(context);
+                          setState(() {
+                            _isOrderPlaced = true;
+                          });
+                        },
                         child: const Text('Place order',
                             style: TextStyle(
                                 fontSize: 20,
