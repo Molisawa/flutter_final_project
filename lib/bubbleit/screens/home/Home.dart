@@ -146,8 +146,7 @@ class _HomeContentState extends State<HomeContent> {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = Provider.of<ThemeProvider>(context)
-        .isDarkMode;
+    final isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
 
     return CustomScrollView(
       controller: scrollController,
