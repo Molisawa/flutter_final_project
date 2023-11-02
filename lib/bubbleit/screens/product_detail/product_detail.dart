@@ -1,49 +1,67 @@
-  import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_final_project/bubbleit/widgets/product_description.dart';
+// Include necessary imports for ProductDescriptionWidget and its dependencies
 
-  import '../../widgets/widgets.dart';
+class ProductDetailScreen extends StatelessWidget {
+  static String routeName = '/product_detail';
+  final dynamic product;
 
-  class ProductDetailScreen extends StatefulWidget {
-    static String routeName = '/product_detail';
+  const ProductDetailScreen({Key? key, required this.product})
+      : super(key: key);
 
-    const ProductDetailScreen({Key? key}) : super(key: key);
-
-    @override
-    State<ProductDetailScreen> createState() => _ProductDetailScreenState();
-  }
-
-  class _ProductDetailScreenState extends State<ProductDetailScreen> {
-    String selectedMilk = '';
-    String selectedTopping = '';
-    String selectedSize = '';
-    String selectedSugar = '';
-    List<String> milkOptions = ['Leche 1', 'Leche 2', 'Leche 3'];
-    List<String> toppingOptions = ['Topping 1', 'Topping 2', 'Topping 3'];
-    List<String> sizeOptions = ['Tamaño 1', 'Tamaño 2', 'Tamaño 3'];
-    List<String> sugarOptions = ['Azúcar 1', 'Azúcar 2', 'Azúcar 3'];
-    bool isAppBarExpanded = true;
-
-    @override
-    Widget build(BuildContext context) {
-      return Scaffold(
-        backgroundColor: kItesoGrayLight,
-        body: CustomScrollView(
-          slivers: <Widget>[
-            AppBarWidget(isExpanded: isAppBarExpanded),
-            SliverToBoxAdapter(
-              child: ProductDescriptionWidget(
-                selectedMilk: selectedMilk,
-                selectedTopping: selectedTopping,
-                selectedSize: selectedSize,
-                selectedSugar: selectedSugar,
-                milkOptions: milkOptions,
-                toppingOptions: toppingOptions,
-                sizeOptions: sizeOptions,
-                sugarOptions: sugarOptions,
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(product['name'] ?? 'Product Detail'),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Image.asset(
+                  product['image'],
+                  width: 200, // You can adjust the size as needed.
+                  height: 200,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-          ],
+              const SizedBox(height: 20),
+              Text(
+                product['name'] ?? 'Unknown Product',
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                product['price'] ?? 'No price available.',
+                style: const TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                product['description'] ?? 'No description available.',
+                style: const TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(height: 20),
+              ProductDescriptionWidget(
+                milkOptions: const ["Almendra", "Entera", "Light"],
+                toppingOptions: const ["ALmendra", "Entera", "Light"],
+                sizeOptions: const ["ALmendra", "Entera", "Light"],
+                sugarOptions: const ["ALmendra", "Entera", "Light"],
+              ),
+            ],
+          ),
         ),
-        bottomNavigationBar: const BottomBarWidget(),
-      );
-    }
+      ),
+    );
   }
+}

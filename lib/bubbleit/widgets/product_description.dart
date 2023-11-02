@@ -8,18 +8,10 @@ class ProductDescriptionWidget extends StatefulWidget {
   final List<String> toppingOptions;
   final List<String> sizeOptions;
   final List<String> sugarOptions;
-  String selectedMilk; // Elimina la palabra clave 'final' aquí
-  final String selectedTopping;
-  final String selectedSize;
-  final String selectedSugar;
 
   ProductDescriptionWidget({
     Key? key,
     required this.milkOptions,
-    required this.selectedMilk,
-    required this.selectedTopping,
-    required this.selectedSize,
-    required this.selectedSugar,
     required this.toppingOptions,
     required this.sizeOptions,
     required this.sugarOptions,
@@ -31,6 +23,10 @@ class ProductDescriptionWidget extends StatefulWidget {
 }
 
 class _ProductDescriptionWidgetState extends State<ProductDescriptionWidget> {
+  String selectedMilk = "";
+  String selectedTopping = "";
+  String selectedSize = "";
+  String selectedSugar = "";
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -44,73 +40,43 @@ class _ProductDescriptionWidgetState extends State<ProductDescriptionWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text(
-              'Bubble Tea',
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-                color: kItesoBlueStrong,
-              ),
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            child: Text(
-              'Descripción breve del producto.',
-              style: TextStyle(
-                fontSize: 16.0,
-              ),
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            child: Text(
-              '\$19.89',
-              style: TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
           CustomExpansionTile(
             titleText: 'Seleccione una leche',
-            selectedValue: widget.selectedMilk,
+            selectedValue: selectedMilk,
             options: widget.milkOptions,
             onChanged: (String value) {
               setState(() {
-                widget.selectedMilk = value;
+                selectedMilk = value;
               });
             },
           ),
           CustomExpansionTile(
-            titleText: 'Seleccione tipo de tapioca',
-            selectedValue: widget.selectedTopping,
-            options: widget.toppingOptions,
+            titleText: 'Seleccione una leche',
+            selectedValue: selectedMilk,
+            options: widget.milkOptions,
             onChanged: (String value) {
               setState(() {
-                widget.selectedMilk = value;
+                selectedMilk = value;
               });
             },
           ),
           CustomExpansionTile(
-            titleText: 'Seleccione un tamaño',
-            selectedValue: widget.selectedSize,
-            options: widget.sizeOptions,
+            titleText: 'Seleccione una leche',
+            selectedValue: selectedMilk,
+            options: widget.milkOptions,
             onChanged: (String value) {
               setState(() {
-                widget.selectedMilk = value;
+                selectedMilk = value;
               });
             },
           ),
           CustomExpansionTile(
-            titleText: 'Seleccione un nivel de azúcar',
-            selectedValue: widget.selectedSugar,
-            options: widget.sugarOptions,
+            titleText: 'Seleccione una leche',
+            selectedValue: selectedMilk,
+            options: widget.milkOptions,
             onChanged: (String value) {
               setState(() {
-                widget.selectedMilk = value;
+                selectedMilk = value;
               });
             },
           ),

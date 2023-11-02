@@ -22,10 +22,19 @@ class MyApp extends StatelessWidget {
               LoginScreen.routeName: (_) => const LoginScreen(),
               RewardsScreen.routeName: (_) => const RewardsScreen(),
               ShoppingCartScreen.routeName: (_) => const ShoppingCartScreen(),
-              ProductDetailScreen.routeName: (_) => const ProductDetailScreen(),
               OrderDetailScreen.routeName: (_) => const OrderDetailScreen(),
               MapScreen.routeName: (_) => const MapScreen(),
               SettingsScreen.routeName: (_) => const SettingsScreen()
+            },
+            onGenerateRoute: (settings) {
+              if (settings.name == ProductDetailScreen.routeName) {
+                final product = settings.arguments as dynamic;
+                return MaterialPageRoute(
+                  builder: (context) => ProductDetailScreen(product: product),
+                );
+              }
+              // Handle other dynamic routes if needed
+              return null;
             },
           );
         },
