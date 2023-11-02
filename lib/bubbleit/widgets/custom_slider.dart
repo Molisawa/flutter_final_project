@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_final_project/bubbleit/screens/screens.dart';
 
 class CustomSlider extends StatefulWidget {
   final List<dynamic> products;
@@ -20,11 +21,13 @@ class _CustomSliderState extends State<CustomSlider> {
         itemBuilder: (context, index) {
           var product = widget.products[index];
           return GestureDetector(
-            onTap: () => Navigator.pushNamed(
-              context,
-              '/product_detail',
-              arguments: product,
-            ),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          ProductDetailScreen(product: product)));
+            },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Card(
@@ -42,7 +45,8 @@ class _CustomSliderState extends State<CustomSlider> {
                         Image.asset(
                           product['image'],
                           width: 120.0,
-                          height: 150.0, // Adjust the height to make the image smaller
+                          height:
+                              150.0, // Adjust the height to make the image smaller
                           fit: BoxFit.cover,
                         ),
                         // White Overlay with Text at the Bottom
@@ -50,7 +54,8 @@ class _CustomSliderState extends State<CustomSlider> {
                           alignment: Alignment.bottomCenter,
                           child: Container(
                             width: 120.0,
-                            height: 50.0, // Adjust the height for the text container
+                            height:
+                                50.0, // Adjust the height for the text container
                             color: Colors.white.withOpacity(0.6),
                             child: Center(
                               child: Text(
