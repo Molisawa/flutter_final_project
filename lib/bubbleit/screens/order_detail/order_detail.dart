@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_final_project/bubbleit/data/payment.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 
 class OrderDetailScreen extends StatefulWidget {
@@ -13,7 +15,14 @@ class OrderDetailScreen extends StatefulWidget {
 }
 
 class _OrderDetailScreen extends State<OrderDetailScreen> {
+  List<dynamic> payment = [];
   bool _isOrderPlaced = false;
+
+  @override
+  void initState(){
+    payment = jsonDecode(PaymentBubble);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +75,7 @@ class _OrderDetailScreen extends State<OrderDetailScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     margin: const EdgeInsets.all(15),
-                    child: const Row(
+                    child:  Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
@@ -84,9 +93,9 @@ class _OrderDetailScreen extends State<OrderDetailScreen> {
                                 SizedBox(
                                   height: 24,
                                 ),
-                                Text("407561****0385",
+                                Text(payment[0]['card'] ?? 'Unknown Card',
                                     style: TextStyle(color: Colors.black)),
-                                Text("no se ni para que sirve este texto",
+                                Text(payment[0]['name'],
                                     style: TextStyle(color: Colors.black)),
                               ],
                             ),

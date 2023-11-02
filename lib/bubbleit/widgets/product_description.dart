@@ -42,12 +42,12 @@ class _ProductDescriptionWidgetState extends State<ProductDescriptionWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomExpansionTile(
-            titleText: 'Seleccione una leche',
-            selectedValue: selectedMilk,
-            options: widget.milkOptions,
+            titleText: 'Seleccione el tamaño',
+            selectedValue: selectedSize,
+            options: widget.sizeOptions,
             onChanged: (String value) {
               setState(() {
-                selectedMilk = value;
+                selectedSize = value;
               });
             },
           ),
@@ -62,26 +62,26 @@ class _ProductDescriptionWidgetState extends State<ProductDescriptionWidget> {
             },
           ),
           CustomExpansionTile(
-            titleText: 'Seleccione una leche',
-            selectedValue: selectedMilk,
-            options: widget.milkOptions,
+            titleText: 'Seleccione su topping',
+            selectedValue: selectedTopping,
+            options: widget.toppingOptions,
             onChanged: (String value) {
               setState(() {
-                selectedMilk = value;
+                selectedTopping = value;
               });
             },
           ),
           CustomExpansionTile(
-            titleText: 'Seleccione una leche',
-            selectedValue: selectedMilk,
-            options: widget.milkOptions,
+            titleText: 'Nivel de azucar',
+            selectedValue: selectedSugar,
+            options: widget.sugarOptions,
             onChanged: (String value) {
               setState(() {
-                selectedMilk = value;
+                selectedSugar = value;
               });
             },
           ),
-           BottomBarWidget(),
+          //  BottomBarWidget(),
         ],
 
       ),
