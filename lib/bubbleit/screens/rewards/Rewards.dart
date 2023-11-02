@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
+import 'package:flutter_final_project/bubbleit/screens/screens.dart';
+import 'package:provider/provider.dart';
 
 class RewardsScreen extends StatefulWidget {
   const RewardsScreen({Key? key});
@@ -21,6 +23,7 @@ class _RewardsState extends State<RewardsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
     return CustomScrollView(
       slivers: [
         SliverAppBar(
@@ -29,7 +32,9 @@ class _RewardsState extends State<RewardsScreen> {
                 (scrollController.hasClients ? scrollController.offset : 0) /
                     100.0;
             blendFactor = blendFactor.clamp(0.0, 1.0);
-            return Color.lerp(kItesoBlueLight, kItesoBlue, blendFactor)!;
+            return isDarkMode
+                ? Colors.grey[900] // Reemplaza con tu color para el tema oscuro
+                : Color.lerp(kItesoBlueLight, kItesoBlue, blendFactor)!;
           }(),
           elevation: 0,
           pinned: true,
@@ -60,24 +65,30 @@ class _RewardsState extends State<RewardsScreen> {
                 Container(
                   width: MediaQuery.of(context).size.width * 0.9,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: isDarkMode ? Colors.grey[800] : Colors.white,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   padding: const EdgeInsets.all(20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Your Points',
+                      Text('Your Points',
                           style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.lightBlueAccent)),
-                      Text(
-                        '$counterPoints',
-                        style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Colors.blueAccent),
+                            color: isDarkMode
+                                ? Colors.white
+                                : Colors.lightBlueAccent,
+                          )),
+                      Text(
+                        '$counterPoints',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: isDarkMode
+                              ? Colors.white
+                              : Colors.lightBlueAccent,
+                        ),
                       ),
                     ],
                   ),
@@ -86,19 +97,22 @@ class _RewardsState extends State<RewardsScreen> {
                 Container(
                   width: MediaQuery.of(context).size.width * 0.9,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: isDarkMode ? Colors.grey[800] : Colors.white,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   padding: const EdgeInsets.all(10),
                   child: Column(
                     children: [
-                      const Row(
+                      Row(
                         children: [
                           Text('Buy two Coffee Bubble Tea',
                               style: TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.lightBlueAccent)),
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                color: isDarkMode
+                                    ? Colors.white
+                                    : Colors.lightBlueAccent,
+                              )),
                         ],
                       ),
                       const SizedBox(height: 10),
@@ -110,8 +124,11 @@ class _RewardsState extends State<RewardsScreen> {
                                   height: 100, width: 93),
                               Image.asset('assets/images/coffeeBubbleTea.png',
                                   height: 100, width: 93),
-                              const Text('=',
+                              Text('=',
                                   style: TextStyle(
+                                      color: isDarkMode
+                                          ? Colors.white
+                                          : Colors.black,
                                       fontSize: 80,
                                       fontWeight: FontWeight.bold)),
                               Image.asset(
@@ -121,10 +138,13 @@ class _RewardsState extends State<RewardsScreen> {
                               ),
                             ],
                           ),
-                          const Align(
+                          Align(
                               alignment: Alignment.bottomRight,
                               child: Text('Get a keychain!',
                                   style: TextStyle(
+                                      color: isDarkMode
+                                          ? Colors.white
+                                          : Colors.lightBlueAccent,
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold))),
                         ],
@@ -136,7 +156,7 @@ class _RewardsState extends State<RewardsScreen> {
                 Container(
                   width: MediaQuery.of(context).size.width * 0.9,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: isDarkMode ? Colors.grey[800] : Colors.white,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   padding: const EdgeInsets.all(10),
@@ -160,10 +180,13 @@ class _RewardsState extends State<RewardsScreen> {
                         children: [
                           Image.asset('assets/images/plushie.png',
                               height: 150, width: 150),
-                          const Align(
+                          Align(
                               alignment: Alignment.bottomLeft,
                               child: Text('Come get your plushie!!',
                                   style: TextStyle(
+                                      color: isDarkMode
+                                          ? Colors.white
+                                          : Colors.lightBlueAccent,
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold))),
                         ],

@@ -1,6 +1,9 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
+import 'package:flutter_final_project/bubbleit/screens/screens.dart';
+
+import 'package:provider/provider.dart';
 
 class BottomBarWidget extends StatefulWidget {
   const BottomBarWidget({super.key});
@@ -15,9 +18,10 @@ class _BottomBarWidgetState extends State<BottomBarWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
     return BottomAppBar(
       elevation: 0.0,
-      color: Colors.white,
+      color: isDarkMode ? Colors.grey[900] : Colors.white,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Row(
@@ -34,9 +38,9 @@ class _BottomBarWidgetState extends State<BottomBarWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.remove,
-                      color: Colors.white,
+                      color: isDarkMode ? Colors.grey[900] : Colors.white,
                     ),
                     onPressed: () {
                       if (itemCount > 1) {
@@ -73,7 +77,9 @@ class _BottomBarWidgetState extends State<BottomBarWidget> {
             ElevatedButton(
               style: ButtonStyle(
                 minimumSize: MaterialStateProperty.all(const Size(160, 60)),
-                backgroundColor: MaterialStateProperty.all(kItesoBlueLight),
+                backgroundColor: MaterialStateProperty.all(
+                  isDarkMode ? Colors.grey : kItesoBlueLight,
+                ),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -82,15 +88,16 @@ class _BottomBarWidgetState extends State<BottomBarWidget> {
               ),
               onPressed: () {
                 // Acción cuando se presiona el botón azul
-                isButtonActivated ? null :
-                Flushbar(
-                  title: 'Añadido al carrito',
-                  message: 'Se ha añadido el producto al carrito',
-                  duration: const Duration(seconds: 3),
-                  backgroundColor: kItesoBlue,
-                  margin: const EdgeInsets.all(8),
-                  borderRadius: BorderRadius.circular(8),
-                ).show(context);
+                isButtonActivated
+                    ? null
+                    : Flushbar(
+                        title: 'Añadido al carrito',
+                        message: 'Se ha añadido el producto al carrito',
+                        duration: const Duration(seconds: 3),
+                        backgroundColor: kItesoBlue,
+                        margin: const EdgeInsets.all(8),
+                        borderRadius: BorderRadius.circular(8),
+                      ).show(context);
                 setState(() {
                   isButtonActivated = true;
                 });

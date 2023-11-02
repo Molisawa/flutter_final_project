@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
+import 'package:flutter_final_project/bubbleit/screens/settings/settings.dart';
 import 'package:flutter_final_project/bubbleit/widgets/custom_expansiontile.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 
 // ignore: must_be_immutable
 class ProductDescriptionWidget extends StatefulWidget {
@@ -29,10 +31,11 @@ class _ProductDescriptionWidgetState extends State<ProductDescriptionWidget> {
   String selectedSugar = "";
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
     return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
+      decoration: BoxDecoration(
+        color: isDarkMode ? Colors.grey[900] : Colors.white,
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(32.0),
           topRight: Radius.circular(32.0),
         ),
