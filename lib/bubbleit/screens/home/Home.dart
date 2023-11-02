@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:another_flushbar/flushbar.dart';
+import 'package:flutter_final_project/bubbleit/data/data.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 import 'package:flutter_final_project/bubbleit/screens/screens.dart';
 import 'package:flutter_final_project/bubbleit/widgets/widgets.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   static String routeName = '/home';
@@ -17,19 +18,26 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int currIndex = 0;
   late PageController _pageController;
+  
 
-  final List<Widget> _screens = [
-    const HomeContent(),
-    const ShoppingCartScreen(),
-    const MapScreen(),
-    const RewardsScreen()
-  ];
+  final List<Widget> _screens = [];
 
   @override
   void initState() {
-    super.initState();
+    
+   
+    
     _pageController = PageController();
     _requestBasePermissions();
+
+    // Initialize HomeContent with the product data
+    _screens.addAll([
+      HomeContent(),
+      ShoppingCartScreen(),
+      MapScreen(),
+      RewardsScreen(),
+    ]);
+    super.initState();
   }
 
   @override
@@ -41,27 +49,27 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<PermissionStatus> _requestPermissionStorage() async {
     return await Permission.storage.request();
   }
-
+  
   // Future<PermissionStatus> _requestPermissionNotifications() async {
   //   return await Permission.notification.request();
   // }
 
-  Future<void> _requestBasePermissions() async {
-    PermissionStatus storage = await _requestPermissionStorage();
+Future<void> _requestBasePermissions() async {
+  PermissionStatus storage = await _requestPermissionStorage();
 
-    while (storage != PermissionStatus.granted) {
-      if (storage.isPermanentlyDenied) {
-        print("Permissions permanently denied.");
-        return; // Break the loop if any permission is permanently denied.
-      }
-      // Request permissions again.
-      storage = await _requestPermissionStorage();
+  while (storage != PermissionStatus.granted ) {
+    if (storage.isPermanentlyDenied ) {
+      print("Permissions permanently denied.");
+      return ; // Break the loop if any permission is permanently denied.
     }
-
-    if (storage.isGranted) {
-      // Permissions are granted.
-    }
+    // Request permissions again.
+    storage = await _requestPermissionStorage();
   }
+
+  if (storage.isGranted) {
+    // Permissions are granted.
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -102,25 +110,27 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: (index) {
           _pageController.animateToPage(
             index,
-            duration: const Duration(milliseconds: 200),
+            duration: Duration(milliseconds: 200),
             curve: Curves.easeInOut,
           );
         },
       ),
     );
   }
+  
+  
 }
 
 class HomeContent extends StatefulWidget {
-  const HomeContent({super.key});
+  HomeContent({super.key});
 
   @override
   State<HomeContent> createState() => _HomeContentState();
 }
 
 class _HomeContentState extends State<HomeContent> {
+  List<dynamic> products = [];
   double appBarHeight = 100.0;
-
   ScrollController scrollController = ScrollController();
 
   @override
@@ -131,6 +141,7 @@ class _HomeContentState extends State<HomeContent> {
         // The listener will call setState whenever the scroll position changes.
       });
     });
+    products = jsonDecode(BubbleIT);
   }
 
   @override
@@ -141,9 +152,6 @@ class _HomeContentState extends State<HomeContent> {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = Provider.of<ThemeProvider>(context)
-        .isDarkMode; // Asegúrate de importar ThemeProvider
-
     return CustomScrollView(
       controller: scrollController,
       slivers: [
@@ -155,25 +163,14 @@ class _HomeContentState extends State<HomeContent> {
             blendFactor =
                 blendFactor.clamp(0.0, 1.0); // Ensure it's between 0 and 1
             // Interpolate between the two colors based on the blend factor.
-            return isDarkMode
-                ? Colors.grey[900] // Reemplaza con tu color para el tema oscuro
-                : Color.lerp(kItesoBlueLight, kItesoBlue, blendFactor)!;
+            return Color.lerp(kItesoBlueLight, kItesoBlue, blendFactor)!;
           }(), // Color de fondo transparente inicial
 
           elevation: 0, // Sin sombra
-          pinned:
-              true, // La AppBar se fija en la parte superior al hacer scroll
+          pinned: true, // La AppBar se fija en la parte superior al hacer scroll
           title: const Text('BubbleIT',
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
           centerTitle: true, // Título del AppBar
-          leading: IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {
-              // go to //settings
-              Navigator.pushNamed(context, '/settings');
-            },
-          ),
         ),
         SliverToBoxAdapter(
           child: Column(
@@ -184,14 +181,12 @@ class _HomeContentState extends State<HomeContent> {
                   borderRadius: BorderRadius.circular(12.0),
                 ),
                 child: SizedBox(
-                  width: double
-                      .infinity, // Ancho de la tarjeta al ancho completo de la pantalla
+                  width: double.infinity,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12.0),
                     child: Image.asset(
-                      'assets/images/welcome_banner.png', // Reemplaza 'tu_imagen.jpg' con la ruta correcta de tu imagen en los activos
-                      fit: BoxFit
-                          .cover, // Ajusta la imagen al tamaño de la tarjeta
+                      'assets/images/welcome_banner.png',
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
@@ -205,7 +200,7 @@ class _HomeContentState extends State<HomeContent> {
               ])
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, '/product_detail');
+                    Navigator.pushNamed(context, '/product_detail',);
                   },
                   child: Column(
                     children: [
@@ -220,7 +215,7 @@ class _HomeContentState extends State<HomeContent> {
                         ),
                       ),
                       const SizedBox(height: 12.0),
-                      const CustomSlider(),
+                      CustomSlider(products: products), // Use all products
                     ],
                   ),
                 ),

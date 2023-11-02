@@ -5,6 +5,8 @@ import 'custom_textfield.dart';
 import 'custom_button.dart'; // Importa el widget CustomButton
 
 class LoginForm extends StatelessWidget {
+  const LoginForm({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -30,6 +32,7 @@ class LoginForm extends StatelessWidget {
                 transitionDuration: duration,
               ),
             );
+
           },
           backgroundColor: kItesoBlueLight,
         ),

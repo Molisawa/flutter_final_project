@@ -59,12 +59,12 @@ class _MapScreenState extends State<MapScreen> {
   Widget _buildLocationCard(String locationName) {
     return Card(
       elevation: 4.0,
-      margin: EdgeInsets.all(16.0),
+      margin: const EdgeInsets.all(16.0),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Text(
           locationName,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
           ),

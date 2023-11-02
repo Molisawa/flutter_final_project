@@ -20,7 +20,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
           backgroundColor: kItesoBlueLight,
           title: Text(
             'Your basket',
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: Colors.white),
           ),
           centerTitle: true,
           actions: <Widget>[
@@ -30,7 +30,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                 Text(
                   'Empty',
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.black),
+                      fontWeight: FontWeight.bold, color: Colors.white),
                 ),
               ],
             ),

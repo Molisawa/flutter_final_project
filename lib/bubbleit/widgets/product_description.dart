@@ -8,21 +8,23 @@ class ProductDescriptionWidget extends StatefulWidget {
   final List<String> toppingOptions;
   final List<String> sizeOptions;
   final List<String> sugarOptions;
-  String selectedMilk; // Elimina la palabra clave 'final' aquí
-  final String selectedTopping;
-  final String selectedSize;
-  final String selectedSugar;
+  // String selectedMilk; // Elimina la palabra clave 'final' aquí
+  // final String selectedTopping;
+  // final String selectedSize;
+  // final String selectedSugar;
+  final dynamic product;
 
   ProductDescriptionWidget({
     Key? key,
     required this.milkOptions,
-    required this.selectedMilk,
-    required this.selectedTopping,
-    required this.selectedSize,
-    required this.selectedSugar,
+    // required this.selectedMilk,
+    // required this.selectedTopping,
+    // required this.selectedSize,
+    // required this.selectedSugar,
     required this.toppingOptions,
     required this.sizeOptions,
-    required this.sugarOptions,
+    required this.sugarOptions, 
+    required this.product,
   }) : super(key: key);
 
   @override
@@ -76,41 +78,41 @@ class _ProductDescriptionWidgetState extends State<ProductDescriptionWidget> {
           ),
           CustomExpansionTile(
             titleText: 'Seleccione una leche',
-            selectedValue: widget.selectedMilk,
+            selectedValue: widget.product['milk'],
             options: widget.milkOptions,
             onChanged: (String value) {
               setState(() {
-                widget.selectedMilk = value;
+                widget.product['milk'] = value;
               });
             },
           ),
           CustomExpansionTile(
             titleText: 'Seleccione tipo de tapioca',
-            selectedValue: widget.selectedTopping,
+            selectedValue: widget.product['levelTapioca'],
             options: widget.toppingOptions,
             onChanged: (String value) {
               setState(() {
-                widget.selectedMilk = value;
+                widget.product['levelTapioca'] = value;
               });
             },
           ),
           CustomExpansionTile(
             titleText: 'Seleccione un tamaño',
-            selectedValue: widget.selectedSize,
+            selectedValue: widget.product['size'],
             options: widget.sizeOptions,
             onChanged: (String value) {
               setState(() {
-                widget.selectedMilk = value;
+                widget.product['size'] = value;
               });
             },
           ),
           CustomExpansionTile(
             titleText: 'Seleccione un nivel de azúcar',
-            selectedValue: widget.selectedSugar,
+            selectedValue: widget.product['sugar'],
             options: widget.sugarOptions,
             onChanged: (String value) {
               setState(() {
-                widget.selectedMilk = value;
+                widget.product['sugar'] = value;
               });
             },
           ),

@@ -28,23 +28,24 @@ class _RewardsState extends State<RewardsScreen> {
             double blendFactor =
                 (scrollController.hasClients ? scrollController.offset : 0) /
                     100.0;
-            blendFactor =
-                blendFactor.clamp(0.0, 1.0);
+            blendFactor = blendFactor.clamp(0.0, 1.0);
             return Color.lerp(kItesoBlueLight, kItesoBlue, blendFactor)!;
           }(),
           elevation: 0,
           pinned: true,
-          title: const Text('Rewards', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          title: const Text('Rewards',
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
           centerTitle: true,
         ),
-
         SliverToBoxAdapter(
           child: Container(
             width: MediaQuery.of(context).size.width,
             height: 200,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/multipleDrinks_background.png'),
+                image:
+                    AssetImage('assets/images/multipleDrinks_background.png'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -66,8 +67,17 @@ class _RewardsState extends State<RewardsScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Your Points', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.lightBlueAccent)),
-                      Text('$counterPoints', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blueAccent),
+                      const Text('Your Points',
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.lightBlueAccent)),
+                      Text(
+                        '$counterPoints',
+                        style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blueAccent),
                       ),
                     ],
                   ),
@@ -97,11 +107,9 @@ class _RewardsState extends State<RewardsScreen> {
                           Row(
                             children: [
                               Image.asset('assets/images/coffeeBubbleTea.png',
-                                  height: 100,
-                                  width: 93),
+                                  height: 100, width: 93),
                               Image.asset('assets/images/coffeeBubbleTea.png',
-                                  height: 100,
-                                  width: 93),
+                                  height: 100, width: 93),
                               const Text('=',
                                   style: TextStyle(
                                       fontSize: 80,
