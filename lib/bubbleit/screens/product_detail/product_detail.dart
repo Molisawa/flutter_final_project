@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_final_project/bubbleit/screens/consts/consts.dart';
+import 'package:flutter_final_project/bubbleit/screens/settings/settings.dart';
 import 'package:flutter_final_project/bubbleit/widgets/custom_bottombar.dart';
 import 'package:flutter_final_project/bubbleit/widgets/product_description.dart';
+import 'package:provider/provider.dart';
+
+
 // Include necessary imports for ProductDescriptionWidget and its dependencies
 
 class ProductDetailScreen extends StatelessWidget {
   static String routeName = '/product_detail';
   final dynamic product;
 
-  const ProductDetailScreen({Key? key, required this.product})
-      : super(key: key);
+  ProductDetailScreen({Key? key, required this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
     return Scaffold(
       appBar: AppBar(
         title: Text(product['name'] ?? 'Product Detail'),
+        backgroundColor: isDarkMode ? Colors.grey[900] : kItesoBlueLight,
       ),
       body: Column(
         children: [
