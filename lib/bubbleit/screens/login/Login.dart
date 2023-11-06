@@ -15,14 +15,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {
-            Navigator.pushNamed(context, SettingsScreen.routeName);
-          },
-        ),
-      ),
+      appBar: AppBar(),
       backgroundColor: kItesoBlue,
       body: SingleChildScrollView(
         child: Center(

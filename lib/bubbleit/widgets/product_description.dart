@@ -10,7 +10,7 @@ class ProductDescriptionWidget extends StatefulWidget {
   final List<String> sizeOptions;
   final List<String> sugarOptions;
 
-  ProductDescriptionWidget({
+  const ProductDescriptionWidget({
     Key? key,
     required this.milkOptions,
     required this.toppingOptions,
