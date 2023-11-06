@@ -151,6 +151,7 @@ class _HomeContentState extends State<HomeContent> {
 
     return CustomScrollView(
       controller: scrollController,
+      physics: const BouncingScrollPhysics(),
       slivers: [
         SliverAppBar(
           backgroundColor: () {
@@ -165,7 +166,7 @@ class _HomeContentState extends State<HomeContent> {
                 : Color.lerp(kItesoBlueLight, kItesoBlue, blendFactor)!;
           }(), // Color de fondo transparente inicial
 
-          elevation: 0, // Sin sombra
+          elevation: 1, // Sin sombra
           pinned:
               true, // La AppBar se fija en la parte superior al hacer scroll
           title: const Text('BubbleIT',

@@ -24,7 +24,6 @@ class _MapScreenState extends State<MapScreen> {
 
     while (status != PermissionStatus.granted) {
       if (status.isPermanentlyDenied) {
-        print("Location permissions permanently denied.");
         return; // Break the loop if the user has permanently denied location permission.
       }
       status = await Permission.location.request();
@@ -42,7 +41,8 @@ class _MapScreenState extends State<MapScreen> {
     // Set the appropriate background color based on the theme
 
     return Scaffold(
-      backgroundColor: kItesoBlue, // Apply the background color here
+      backgroundColor: kItesoBlue,
+      // Apply the background color here
       body: Column(
         children: <Widget>[
           Expanded(
