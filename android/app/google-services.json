@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "808431602149",
+    "project_id": "moviles-project-goncha",
+    "storage_bucket": "moviles-project-goncha.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:808431602149:android:2f316a5e6f53ce6aa8870c",
+        "android_client_info": {
+          "package_name": "com.example.flutter_final_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjxdX4SAhCU1aRO0m0WY38iOxhA5eqOyo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,7 +4,7 @@ import 'package:flutter_final_project/bubbleit/screens/screens.dart';
 import 'package:provider/provider.dart';
 
 class RewardsScreen extends StatefulWidget {
-  const RewardsScreen({Key? key});
+  const RewardsScreen({super.key});
   static String routeName = '/rewards';
 
   @override

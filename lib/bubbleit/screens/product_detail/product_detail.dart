@@ -12,7 +12,7 @@ class ProductDetailScreen extends StatelessWidget {
   static String routeName = '/product_detail';
   final dynamic product;
 
-  ProductDetailScreen({Key? key, required this.product}) : super(key: key);
+  const ProductDetailScreen({Key? key, required this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -62,22 +62,22 @@ class ProductDetailScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    ProductDescriptionWidget(
-                      milkOptions: const ["Almendra", "Entera", "Light"],
-                      toppingOptions: const [
+                    const ProductDescriptionWidget(
+                      milkOptions: ["Almendra", "Entera", "Light"],
+                      toppingOptions: [
                         "Tapioca 1",
                         "Tapioca 2",
                         "Tapioca 3"
                       ],
-                      sizeOptions: const ["Chico", "Mediano", "Grande"],
-                      sugarOptions: const ["Sin azucar", "Moderado", "Azucar"],
+                      sizeOptions: ["Chico", "Mediano", "Grande"],
+                      sugarOptions: ["Sin azucar", "Moderado", "Azucar"],
                     ),
                   ],
                 ),
               ),
             ),
           ),
-          BottomBarWidget(),
+          const BottomBarWidget(),
         ],
       ),
     );
