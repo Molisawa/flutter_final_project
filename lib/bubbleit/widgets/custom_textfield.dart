@@ -4,7 +4,7 @@ import '../screens/consts/consts.dart';
 class CustomTextField extends StatelessWidget {
   final String labelText;
 
-  const CustomTextField({super.key, required this.labelText});
+  const CustomTextField({super.key, required this.labelText, required TextEditingController controller});
 
   @override
   Widget build(BuildContext context) {

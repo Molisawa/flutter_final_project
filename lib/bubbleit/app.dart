@@ -1,22 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/screens/screens.dart';
+import 'package:flutter_final_project/bubbleit/widgets/auth_wrapper.dart';
 import 'package:provider/provider.dart';
-import 'auth_gate.dart';
-
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const AuthGate(),
-    );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +17,7 @@ class MyApp extends StatelessWidget {
             title: 'BubbleIt',
             theme:
                 themeProvider.isDarkMode ? ThemeData.dark() : ThemeData.light(),
-            initialRoute: LoginScreen.routeName,
+            home: const AuthWrapper(),
             routes: {
               HomeScreen.routeName: (_) => const HomeScreen(),
               LoginScreen.routeName: (_) => const LoginScreen(),
@@ -54,3 +42,4 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+}
