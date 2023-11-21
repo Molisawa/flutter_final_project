@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "122720332753",
-    "project_id": "bubbleit-57575",
-    "storage_bucket": "bubbleit-57575.appspot.com"
+    "project_number": "808431602149",
+    "project_id": "moviles-project-goncha",
+    "storage_bucket": "moviles-project-goncha.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:122720332753:android:8c76b8cd556b583a47cef0",
+        "mobilesdk_app_id": "1:808431602149:android:2f316a5e6f53ce6aa8870c",
         "android_client_info": {
           "package_name": "com.example.flutter_final_project"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDoWKzBvX_wFN1pOHSX0rcXbi1B7p8LpIk"
+          "current_key": "AIzaSyDjxdX4SAhCU1aRO0m0WY38iOxhA5eqOyo"
         }
       ],
       "services": {

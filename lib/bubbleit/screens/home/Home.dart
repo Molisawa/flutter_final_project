@@ -1,5 +1,6 @@
 // import 'package:flutter/material.dart';
 import 'dart:convert';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_final_project/bubbleit/data/data.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 import 'package:flutter_final_project/bubbleit/screens/screens.dart';
@@ -150,6 +151,7 @@ class _HomeContentState extends State<HomeContent> {
 
     return CustomScrollView(
       controller: scrollController,
+      physics: const BouncingScrollPhysics(),
       slivers: [
         SliverAppBar(
           backgroundColor: () {
@@ -164,7 +166,7 @@ class _HomeContentState extends State<HomeContent> {
                 : Color.lerp(kItesoBlueLight, kItesoBlue, blendFactor)!;
           }(), // Color de fondo transparente inicial
 
-          elevation: 0, // Sin sombra
+          elevation: 1, // Sin sombra
           pinned:
               true, // La AppBar se fija en la parte superior al hacer scroll
           title: const Text('BubbleIT',
@@ -182,22 +184,12 @@ class _HomeContentState extends State<HomeContent> {
         SliverToBoxAdapter(
           child: Column(
             children: [
-              Card(
-                margin: const EdgeInsets.all(12.0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12.0),
-                    child: Image.asset(
-                      'assets/images/welcome_banner.png',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
+              const ImageCarousel(imageList: [
+                'assets/images/welcome_banner.png',
+                'assets/images/welcome_banner1.png',
+                'assets/images/welcome_banner.png',
+                'assets/images/welcome_banner1.png',
+              ]),
               // Secciones con Sliders
               for (var sectionTitle in [
                 'Top Sales',
@@ -226,5 +218,25 @@ class _HomeContentState extends State<HomeContent> {
         ),
       ],
     );
+  }
+}
+
+class ImageCarousel extends StatelessWidget {
+  const ImageCarousel({super.key, required this.imageList});
+  final List<String> imageList;
+  @override
+  Widget build(BuildContext context) {
+    return CarouselSlider(
+        options: CarouselOptions(
+          autoPlay: true,
+          aspectRatio: 2.0,
+          enlargeCenterPage: true,
+          viewportFraction: 0.9,
+          enlargeStrategy: CenterPageEnlargeStrategy.height,
+        ),
+        items: imageList
+            .map((e) =>
+                Center(child: Image.asset(e, fit: BoxFit.cover, width: 1000)))
+            .toList());
   }
 }

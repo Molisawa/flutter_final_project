@@ -5,7 +5,7 @@ import 'custom_textfield.dart';
 import 'custom_button.dart'; // Importa el widget CustomButton
 
 class LoginForm extends StatelessWidget {
-  const LoginForm({super.key});
+  const LoginForm({super.key, required List providers, required Padding Function(dynamic context, dynamic constraints, dynamic shrinkOffset) headerBuilder});
 
   @override
   Widget build(BuildContext context) {

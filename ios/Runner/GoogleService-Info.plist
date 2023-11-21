@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyADEDxA59QVP5WLTH0Mlv0FI67UivHYDJI</string>
+	<string>AIzaSyB1skqnVTeGCN3iKO65c2sfpAcOnzWLwKg</string>
 	<key>GCM_SENDER_ID</key>
-	<string>122720332753</string>
+	<string>808431602149</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.example.flutterFinalProject</string>
 	<key>PROJECT_ID</key>
-	<string>bubbleit-57575</string>
+	<string>moviles-project-goncha</string>
 	<key>STORAGE_BUCKET</key>
-	<string>bubbleit-57575.appspot.com</string>
+	<string>moviles-project-goncha.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:122720332753:ios:526ac11d23cb7c4a47cef0</string>
+	<string>1:808431602149:ios:8a142c6148731d8ca8870c</string>
 </dict>
 </plist>

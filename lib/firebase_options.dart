@@ -44,38 +44,37 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCjbWGxFQKj8P3PJ4v4SJKs3HBu_lCDtxg',
-    appId: '1:122720332753:web:ec2b27e45ee9c3b447cef0',
-    messagingSenderId: '122720332753',
-    projectId: 'bubbleit-57575',
-    authDomain: 'bubbleit-57575.firebaseapp.com',
-    storageBucket: 'bubbleit-57575.appspot.com',
-    measurementId: 'G-7W7J0CKZGW',
+    apiKey: 'AIzaSyCCM2hXmWJLKOFaWSpKBGzNkqvs6Ut42Nc',
+    appId: '1:808431602149:web:8447fa2b02dfe0a5a8870c',
+    messagingSenderId: '808431602149',
+    projectId: 'moviles-project-goncha',
+    authDomain: 'moviles-project-goncha.firebaseapp.com',
+    storageBucket: 'moviles-project-goncha.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDoWKzBvX_wFN1pOHSX0rcXbi1B7p8LpIk',
-    appId: '1:122720332753:android:8c76b8cd556b583a47cef0',
-    messagingSenderId: '122720332753',
-    projectId: 'bubbleit-57575',
-    storageBucket: 'bubbleit-57575.appspot.com',
+    apiKey: 'AIzaSyDjxdX4SAhCU1aRO0m0WY38iOxhA5eqOyo',
+    appId: '1:808431602149:android:2f316a5e6f53ce6aa8870c',
+    messagingSenderId: '808431602149',
+    projectId: 'moviles-project-goncha',
+    storageBucket: 'moviles-project-goncha.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyADEDxA59QVP5WLTH0Mlv0FI67UivHYDJI',
-    appId: '1:122720332753:ios:526ac11d23cb7c4a47cef0',
-    messagingSenderId: '122720332753',
-    projectId: 'bubbleit-57575',
-    storageBucket: 'bubbleit-57575.appspot.com',
+    apiKey: 'AIzaSyB1skqnVTeGCN3iKO65c2sfpAcOnzWLwKg',
+    appId: '1:808431602149:ios:8a142c6148731d8ca8870c',
+    messagingSenderId: '808431602149',
+    projectId: 'moviles-project-goncha',
+    storageBucket: 'moviles-project-goncha.appspot.com',
     iosBundleId: 'com.example.flutterFinalProject',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyADEDxA59QVP5WLTH0Mlv0FI67UivHYDJI',
-    appId: '1:122720332753:ios:566ce1209cd5038047cef0',
-    messagingSenderId: '122720332753',
-    projectId: 'bubbleit-57575',
-    storageBucket: 'bubbleit-57575.appspot.com',
+    apiKey: 'AIzaSyB1skqnVTeGCN3iKO65c2sfpAcOnzWLwKg',
+    appId: '1:808431602149:ios:c4c44baf91b747b3a8870c',
+    messagingSenderId: '808431602149',
+    projectId: 'moviles-project-goncha',
+    storageBucket: 'moviles-project-goncha.appspot.com',
     iosBundleId: 'com.example.flutterFinalProject.RunnerTests',
   );
 }

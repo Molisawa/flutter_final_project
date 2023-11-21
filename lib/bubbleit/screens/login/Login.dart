@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/login_form.dart';
 import '../consts/consts.dart';
-import '../screens.dart';
 
 class LoginScreen extends StatefulWidget {
   static String routeName = '/login';
@@ -66,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 20.0),
-                const LoginForm(),
+                const LoginForm(providers: [],),
                 const SizedBox(height: 16.0),
               ],
             ),

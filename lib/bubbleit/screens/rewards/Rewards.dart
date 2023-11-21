@@ -4,7 +4,7 @@ import 'package:flutter_final_project/bubbleit/screens/screens.dart';
 import 'package:provider/provider.dart';
 
 class RewardsScreen extends StatefulWidget {
-  const RewardsScreen({Key? key});
+  const RewardsScreen({super.key});
   static String routeName = '/rewards';
 
   @override
@@ -16,8 +16,16 @@ class _RewardsState extends State<RewardsScreen> {
   ScrollController scrollController = ScrollController();
 
   @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
   void dispose() {
-    scrollController.dispose();
+    scrollController.removeListener(() {});
     super.dispose();
   }
 
@@ -25,18 +33,22 @@ class _RewardsState extends State<RewardsScreen> {
   Widget build(BuildContext context) {
     final isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
     return CustomScrollView(
+      controller: scrollController,
+      physics: const BouncingScrollPhysics(),
       slivers: [
         SliverAppBar(
           backgroundColor: () {
             double blendFactor =
                 (scrollController.hasClients ? scrollController.offset : 0) /
                     100.0;
-            blendFactor = blendFactor.clamp(0.0, 1.0);
+            blendFactor =
+                blendFactor.clamp(0.0, 1.0); // Ensure it's between 0 and 1
+            // Interpolate between the two colors based on the blend factor.
             return isDarkMode
                 ? Colors.grey[900] // Reemplaza con tu color para el tema oscuro
                 : Color.lerp(kItesoBlueLight, kItesoBlue, blendFactor)!;
           }(),
-          elevation: 0,
+          elevation: 1,
           pinned: true,
           title: const Text('Rewards',
               style:

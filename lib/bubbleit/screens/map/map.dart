@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_final_project/bubbleit/screens/settings/settings.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({Key? key}) : super(key: key);
@@ -17,29 +20,35 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Future<void> _requestLocationPermission() async {
-  PermissionStatus status = await Permission.location.request();
+    PermissionStatus status = await Permission.location.request();
 
-  while (status != PermissionStatus.granted) {
-    if(status.isPermanentlyDenied){
-      print("Location permissions permanently denied.");
-      return ; // Break the loop if the user has permanently denied location permission.
+    while (status != PermissionStatus.granted) {
+      if (status.isPermanentlyDenied) {
+        return; // Break the loop if the user has permanently denied location permission.
+      }
+      status = await Permission.location.request();
     }
-    status = await Permission.location.request();
-  }
 
-  if (status.isGranted) {
-    // Location permissions are granted, you can perform location-related actions here.
-  } 
-}
+    if (status.isGranted) {
+      // Location permissions are granted, you can perform location-related actions here.
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    // Use Provider to determine if dark mode is enabled
+    final isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
+    // Set the appropriate background color based on the theme
+
     return Scaffold(
+      backgroundColor: kItesoBlue,
+      // Apply the background color here
       body: Column(
         children: <Widget>[
           Expanded(
             flex: 3,
-            child: Image.asset('assets/images/mapa1.png'), // Reemplaza 'tu_mapa.png' con la ubicación correcta de tu mapa en assets
+            child: Image.asset(
+                'assets/images/mapa1.png'), // Replace with your actual map image in assets
           ),
           Expanded(
             flex: 2,

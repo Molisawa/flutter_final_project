@@ -13,6 +13,23 @@ class ShoppingCartScreen extends StatefulWidget {
 }
 
 class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
+  ScrollController scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    scrollController.removeListener(() {});
+    // scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
@@ -20,10 +37,25 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
       children: [
         Expanded(
           child: CustomScrollView(
-            slivers: <Widget>[
+            controller: scrollController,
+            physics: const BouncingScrollPhysics(),
+            slivers: [
               SliverAppBar(
-                backgroundColor:
-                    isDarkMode ? Colors.grey[900] : kItesoBlueLight,
+                backgroundColor: () {
+                  double blendFactor = (scrollController.hasClients
+                          ? scrollController.offset
+                          : 0) /
+                      100.0;
+                  blendFactor = blendFactor.clamp(
+                      0.0, 1.0); // Ensure it's between 0 and 1
+                  // Interpolate between the two colors based on the blend factor.
+                  return isDarkMode
+                      ? Colors.grey[
+                          900] // Reemplaza con tu color para el tema oscuro
+                      : Color.lerp(kItesoBlueLight, kItesoBlue, blendFactor)!;
+                }(),
+                pinned: true,
+                elevation: 1,
                 title: const Text(
                   'Your basket',
                   style: TextStyle(color: Colors.white),
@@ -140,7 +172,7 @@ class BottomBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

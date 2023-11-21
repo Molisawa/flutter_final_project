@@ -191,7 +191,7 @@ class _OrderDetailScreen extends State<OrderDetailScreen> {
                               TableRow(
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.symmetric(
+                                    padding: const EdgeInsets.symmetric(
                                         vertical: 16.0, horizontal: 4.0),
                                     child: Text("Coffe Bubble Tea",
                                         style: TextStyle(
