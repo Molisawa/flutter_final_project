@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
             title: 'BubbleIt',
             theme:
                 themeProvider.isDarkMode ? ThemeData.dark() : ThemeData.light(),
-            home: const AuthWrapper(),
+            home: const LoginScreen(),
             routes: {
               HomeScreen.routeName: (_) => const HomeScreen(),
               LoginScreen.routeName: (_) => const LoginScreen(),
