@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/screens/screens.dart';
+import 'package:flutter_final_project/bubbleit/widgets/auth_wrapper.dart';
 import '../screens/consts/consts.dart';
 import 'custom_textfield.dart';
 import 'custom_button.dart'; // Importa el widget CustomButton
@@ -24,7 +25,7 @@ class LoginForm extends StatelessWidget {
             Navigator.of(context).pushReplacement(
               PageRouteBuilder(
                 pageBuilder: (context, animation, secondaryAnimation) =>
-                    const HomeScreen(),
+                    const AuthWrapper(),
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) {
                   return FadeTransition(opacity: animation, child: child);
@@ -32,7 +33,6 @@ class LoginForm extends StatelessWidget {
                 transitionDuration: duration,
               ),
             );
-
           },
           backgroundColor: kItesoBlueLight,
         ),
@@ -45,7 +45,7 @@ class LoginForm extends StatelessWidget {
             Navigator.of(context).pushReplacement(
               PageRouteBuilder(
                 pageBuilder: (context, animation, secondaryAnimation) =>
-                    const HomeScreen(),
+                    const AuthWrapper(),
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) {
                   return ScaleTransition(scale: animation, child: child);

@@ -14,7 +14,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      // appBar: AppBar(),
       backgroundColor: kItesoBlue,
       body: SingleChildScrollView(
         child: Center(
@@ -27,6 +27,9 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             child: Column(
               children: <Widget>[
+                const SizedBox(
+                  height: 50.0,
+                ),
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
