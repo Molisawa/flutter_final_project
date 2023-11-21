@@ -12,17 +12,30 @@ class LoginForm extends StatelessWidget {
   LoginForm({super.key});
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
-  String _email = '';
+  String _email = 'testing';
   String _password = '';
 
-  Future<void> signInWithEmailAndPassword(String email, String password)async{
+  Future<bool> signInWithEmailAndPassword(String email, String password) async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-      User? user = FirebaseAuth.instance.currentUser;
-      DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('users').doc(user!.uid).get();
-      print('User: ${snapshot.data()}');
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      User? user = userCredential.user;
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('email', isEqualTo: email)
+          .where('password', isEqualTo: password)
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        print("yay");
+        return true;
+      } else {
+        print("nay");
+        return false;
+      }
     } catch (e) {
-      print(e);
+      // print(e);
+
+      return false;
     }
   }
 
@@ -32,17 +45,20 @@ class LoginForm extends StatelessWidget {
       children: <Widget>[
         CustomTextField(labelText: 'Usuario', controller: _emailController),
         const SizedBox(height: 12.0),
-        CustomTextField(labelText: 'Contraseña', controller: _passwordController),
+        CustomTextField(
+            labelText: 'Contraseña', controller: _passwordController),
         const SizedBox(height: 20.0),
         CustomButton(
           text: 'Sign In',
           onPressed: () {
-            setState(){
-              _emailController.text = _email;
+            setState() {
+              _email = _email;
               _passwordController.text = _password;
             }
-            signInWithEmailAndPassword(_emailController.text, _passwordController.text);
-            if(_emailController.text.isEmpty || _passwordController.text.isEmpty){
+
+            signInWithEmailAndPassword("testmoviles@test.com", "password123");
+            if (_emailController.text.isEmpty ||
+                _passwordController.text.isEmpty) {
               return;
             }
             //por ahora ponemos la ruta así, porque no hemos visto la parte de auth
@@ -59,7 +75,6 @@ class LoginForm extends StatelessWidget {
                 transitionDuration: duration,
               ),
             );
-
           },
           backgroundColor: kItesoBlueLight,
         ),
