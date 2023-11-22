@@ -1,7 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/screens/screens.dart';
-import 'package:flutter_final_project/bubbleit/screens/sign_in/sign_in.dart';
+import 'package:flutter_final_project/bubbleit/screens/sign_up/sign_up.dart';
 import 'package:flutter_final_project/bubbleit/widgets/auth_wrapper.dart';
 import '../screens/consts/consts.dart';
 import 'custom_textfield.dart';
@@ -88,17 +88,17 @@ class LoginForm extends StatelessWidget {
           onPressed: () {
             const duration = Duration(milliseconds: 500);
             //este para que peudan ver la app, pero despues si quieren ahcer un pedido se debe ejecutar auth
-            Navigator.of(context).pushReplacement(
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    const SigninScreen(),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  return ScaleTransition(scale: animation, child: child);
-                },
-                transitionDuration: duration,
-              ),
-            );
+          // Navigator.of(context).push(
+          //   PageRouteBuilder(
+          //     pageBuilder: (context, animation, secondaryAnimation) =>
+          //         const SignupScreen(),
+          //     transitionsBuilder:
+          //         (context, animation, secondaryAnimation, child) {
+          //       return ScaleTransition(scale: animation, child: child);
+          //     },
+          //     transitionDuration: duration,
+          //   ),
+          // );
           },
           backgroundColor: kItesoGray,
         ),
