@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
-import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/screens/home/Home.dart';
 import 'package:flutter_final_project/bubbleit/screens/login/Login.dart';
@@ -14,7 +13,7 @@ class AuthWrapper extends StatelessWidget {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return LoginScreen();
+          return const LoginScreen();
           // return SignInScreen(
           //   providers: [
           //     EmailAuthProvider(),
