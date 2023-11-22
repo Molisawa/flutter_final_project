@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/screens/settings/settings.dart';
-import 'package:flutter_final_project/bubbleit/screens/settings/settings.dart';
 import 'package:flutter_final_project/bubbleit/widgets/custom_expansiontile.dart';
-import 'package:provider/provider.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
@@ -13,12 +11,12 @@ class ProductDescriptionWidget extends StatefulWidget {
   final List<String> sugarOptions;
 
   const ProductDescriptionWidget({
-    Key? key,
+    super.key,
     required this.milkOptions,
     required this.toppingOptions,
     required this.sizeOptions,
     required this.sugarOptions,
-  }) : super(key: key);
+  });
 
   @override
   _ProductDescriptionWidgetState createState() =>

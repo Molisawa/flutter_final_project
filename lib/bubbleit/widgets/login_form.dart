@@ -1,7 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/screens/screens.dart';
-import 'package:flutter_final_project/bubbleit/widgets/auth_wrapper.dart';
+import 'package:flutter_final_project/bubbleit/screens/sign_in/sign_in.dart';
 import 'package:flutter_final_project/bubbleit/widgets/auth_wrapper.dart';
 import '../screens/consts/consts.dart';
 import 'custom_textfield.dart';
@@ -10,10 +10,10 @@ import 'custom_button.dart'; // Importa el widget CustomButton
 
 class LoginForm extends StatelessWidget {
   LoginForm({super.key});
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  String _email = 'testing';
-  String _password = '';
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final String _email = 'testing';
+  final String _password = '';
 
   Future<bool> signInWithEmailAndPassword(String email, String password) async {
     try {
@@ -37,31 +37,14 @@ class LoginForm extends StatelessWidget {
     }
   }
 
-  void _attemptLogin(BuildContext context) async {
-    print("el contexto ${_emailController.text}");
-    bool credentialsValid = await signInWithEmailAndPassword(
-        _emailController.text, _passwordController.text);
-
-    if (credentialsValid) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-            builder: (context) => HomeScreen()), // Replace with your HomeScreen
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Invalid credentials. Please try again.')),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        CustomTextField(labelText: 'Usuario', controller: _emailController,),
+        CustomTextField(labelText: 'Usuario', controller: _emailController),
         const SizedBox(height: 12.0),
         CustomTextField(
-            labelText: 'Contraseña', controller: _passwordController),
+            labelText: 'Contraseña', controller: _passwordController, obscureText: true),
         const SizedBox(height: 20.0),
         CustomButton(
           text: 'Sign In',
@@ -77,7 +60,7 @@ class LoginForm extends StatelessWidget {
             Navigator.of(context).pushReplacement(
               PageRouteBuilder(
                 pageBuilder: (context, animation, secondaryAnimation) =>
-                    const AuthWrapper(),
+                    const SigninScreen(),
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) {
                   return ScaleTransition(scale: animation, child: child);

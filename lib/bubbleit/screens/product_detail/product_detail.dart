@@ -12,7 +12,7 @@ class ProductDetailScreen extends StatelessWidget {
   static String routeName = '/product_detail';
   final dynamic product;
 
-  const ProductDetailScreen({Key? key, required this.product}) : super(key: key);
+  const ProductDetailScreen({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {

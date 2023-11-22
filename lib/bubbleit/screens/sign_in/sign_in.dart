@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_final_project/bubbleit/widgets/signin_form.dart';
 import '../../widgets/login_form.dart';
 import '../consts/consts.dart';
 
-class LoginScreen extends StatefulWidget {
+class SigninScreen extends StatefulWidget {
   static String routeName = '/login';
-  const LoginScreen({super.key});
+  const SigninScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SigninScreen> createState() => _SigninScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SigninScreenState extends State<SigninScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 20.0),
                 const Text(
-                  'Log In',
+                  'Sign Up',
                   style: TextStyle(
                     fontSize: 48.0,
                     fontWeight: FontWeight.bold,
@@ -68,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 20.0),
-                LoginForm(),
+                SigninForm(),
                 const SizedBox(height: 16.0),
               ],
             ),

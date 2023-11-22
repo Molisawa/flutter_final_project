@@ -4,7 +4,7 @@ import 'package:flutter_final_project/bubbleit/screens/screens.dart';
 class CustomSlider extends StatefulWidget {
   final List<dynamic> products;
 
-  const CustomSlider({Key? key, required this.products}) : super(key: key);
+  const CustomSlider({super.key, required this.products});
 
   @override
   State<CustomSlider> createState() => _CustomSliderState();
