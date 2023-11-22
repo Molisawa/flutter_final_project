@@ -1,4 +1,5 @@
 import 'package:another_flushbar/flushbar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/screens/screens.dart';
 import 'package:flutter_final_project/bubbleit/screens/sign_in/sign_in.dart';
@@ -8,58 +9,78 @@ import 'custom_textfield.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'custom_button.dart'; // Importa el widget CustomButton
 
-class LoginForm extends StatelessWidget {
-  LoginForm({super.key});
+class SigninForm extends StatelessWidget {
+  SigninForm({super.key});
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final String _email = 'testing';
-  final String _password = '';
+  final TextEditingController _confirmPasswordController = TextEditingController();
 
-  Future<bool> signInWithEmailAndPassword(String email, String password) async {
+  Future<bool> registerWithEmailAndPassword(String email, String password, String confirmPassword) async {
+    if(password != confirmPassword){
+      return false;
+    }
     try {
+      // Verificar si el usuario ya existe en la base de datos antes de registrar
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('users')
           .where('email', isEqualTo: email)
-          .where('password', isEqualTo: password)
           .get();
-      print(querySnapshot);
+
       if (querySnapshot.docs.isNotEmpty) {
-        print("yay");
-        return true;
-      } else {
-        print("nay");
+        // El usuario ya existe, mostrar un mensaje de error
         return false;
+      } else {
+        // Crear un nuevo usuario en Firebase Authentication
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+        // El usuario no existe, registrar en la base de datos
+        await FirebaseFirestore.instance.collection('users').add({
+          'email': email,
+          'password': password,
+          // Otros campos de usuario si es necesario
+        });
+        return true;
       }
     } catch (e) {
       print(e);
-      print("usuario " + email + ' y contraseña ' + password);
+      print("Error al registrar usuario " + email);
       return false;
     }
   }
 
-  void _attemptLogin(BuildContext context) async {
-    bool credentialsValid = await signInWithEmailAndPassword(
-        _emailController.text, _passwordController.text);
+  void _attemptRegistration(BuildContext context) async {
+    bool registrationSuccessful = await registerWithEmailAndPassword(
+        _emailController.text, _passwordController.text, _confirmPasswordController.text);
 
-    if (credentialsValid) {
+    if (registrationSuccessful) {
+      Flushbar(
+        title: "Registro Exitoso",
+        message: "Usuario registrado correctamente",
+        duration: const Duration(seconds: 3),
+        margin: const EdgeInsets.all(8),
+        borderRadius: BorderRadius.circular(8),
+      ).show(context);
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
             builder: (context) => const HomeScreen()), // Replace with your HomeScreen
       );
+      // Puedes redirigir a la pantalla de inicio de sesión o a otra pantalla después del registro
     } else {
-      if(_emailController.text.isEmpty || _passwordController.text.isEmpty){
+      if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
         Flushbar(
           title: "Error",
-          message: "Usuario o contraseña vacios",
+          message: "Usuario o contraseña vacíos",
           duration: const Duration(seconds: 3),
           margin: const EdgeInsets.all(8),
           borderRadius: BorderRadius.circular(8),
         ).show(context);
         return;
-      }else{
+      } else {
         Flushbar(
           title: "Error",
-          message: "Usuario o contraseña incorrectos",
+          message: "El usuario ya existe",
           duration: const Duration(seconds: 3),
           margin: const EdgeInsets.all(8),
           borderRadius: BorderRadius.circular(8),
@@ -76,22 +97,27 @@ class LoginForm extends StatelessWidget {
         const SizedBox(height: 12.0),
         CustomTextField(
             labelText: 'Contraseña', controller: _passwordController, obscureText: true),
+        const SizedBox(height: 12.0),
+        CustomTextField(
+            labelText: 'Confirm Contraseña', controller: _confirmPasswordController, obscureText: true),
         const SizedBox(height: 20.0),
         CustomButton(
-          text: 'Sign In',
-          onPressed: () => _attemptLogin(context),
+          text: 'Register',
+          onPressed: () {
+            _attemptRegistration(context);
+          },
           backgroundColor: kItesoBlueLight,
         ),
         const SizedBox(height: 16.0),
         CustomButton(
-          text: 'Register',
+          text: 'Sign In',
           onPressed: () {
             const duration = Duration(milliseconds: 500);
             //este para que peudan ver la app, pero despues si quieren ahcer un pedido se debe ejecutar auth
-            Navigator.of(context).pushReplacement(
+            Navigator.of(context).push(
               PageRouteBuilder(
                 pageBuilder: (context, animation, secondaryAnimation) =>
-                    const SigninScreen(),
+                    const LoginScreen(),
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) {
                   return ScaleTransition(scale: animation, child: child);
