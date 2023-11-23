@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_final_project/bubbleit/widgets/signin_form.dart';
+import 'package:flutter_final_project/bubbleit/widgets/signup_form.dart';
+import '../../widgets/login_form.dart';
 import '../consts/consts.dart';
 
-class SigninScreen extends StatefulWidget {
+class SignupScreen extends StatefulWidget {
   static String routeName = '/login';
-  const SigninScreen({super.key});
+  const SignupScreen({super.key});
 
   @override
-  State<SigninScreen> createState() => _SigninScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _SigninScreenState extends State<SigninScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      // appBar: AppBar(),
       backgroundColor: kItesoBlue,
+      appBar: AppBar(backgroundColor: kItesoBlue),
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
@@ -35,8 +37,8 @@ class _SigninScreenState extends State<SigninScreen> {
                     color: kItesoBlueStrong,
                   ),
                 ),
-                const SizedBox(height: 20.0),
-                SigninForm(),
+                const SizedBox(height: 60.0),
+                SignupForm(),
                 const SizedBox(height: 16.0),
               ],
             ),

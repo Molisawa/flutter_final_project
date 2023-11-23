@@ -1,6 +1,7 @@
 // import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_final_project/bubbleit/data/data.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 import 'package:flutter_final_project/bubbleit/screens/screens.dart';
@@ -117,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class HomeContent extends StatefulWidget {
-  const HomeContent({super.key});
+  const HomeContent({Key? key}) : super(key: key);
 
   @override
   State<HomeContent> createState() => _HomeContentState();
@@ -127,6 +128,27 @@ class _HomeContentState extends State<HomeContent> {
   List<dynamic> products = [];
   double appBarHeight = 100.0;
   ScrollController scrollController = ScrollController();
+  bool isLoading=true;
+
+  Future<void> getData() async {
+    try {
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection('products').get();
+
+      setState(() {
+        products = querySnapshot.docs.map((doc) => doc.data()).toList();
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> initData() async {
+    await getData();
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   @override
   void initState() {
@@ -136,7 +158,7 @@ class _HomeContentState extends State<HomeContent> {
         // The listener will call setState whenever the scroll position changes.
       });
     });
-    products = jsonDecode(BubbleIT);
+    initData();
   }
 
   @override
@@ -162,21 +184,19 @@ class _HomeContentState extends State<HomeContent> {
                 blendFactor.clamp(0.0, 1.0); // Ensure it's between 0 and 1
             // Interpolate between the two colors based on the blend factor.
             return isDarkMode
-                ? Colors.grey[900] // Reemplaza con tu color para el tema oscuro
+                ? Colors.grey[900] // Replace with your color for dark mode
                 : Color.lerp(kItesoBlueLight, kItesoBlue, blendFactor)!;
-          }(), // Color de fondo transparente inicial
-
-          elevation: 1, // Sin sombra
-          pinned:
-              true, // La AppBar se fija en la parte superior al hacer scroll
-          title: const Text('BubbleIT',
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-          centerTitle: true, // Título del AppBar
+          }(),
+          elevation: 1,
+          pinned: true,
+          title: const Text(
+            'BubbleIT',
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true,
           leading: IconButton(
             icon: const Icon(Icons.menu),
             onPressed: () {
-              // go to //settings
               Navigator.pushNamed(context, '/settings');
             },
           ),
@@ -190,7 +210,6 @@ class _HomeContentState extends State<HomeContent> {
                 'assets/images/welcome_banner.png',
                 'assets/images/welcome_banner1.png',
               ]),
-              // Secciones con Sliders
               for (var sectionTitle in [
                 'Top Sales',
                 'Seasonals',
@@ -210,7 +229,10 @@ class _HomeContentState extends State<HomeContent> {
                       ),
                     ),
                     const SizedBox(height: 12.0),
-                    CustomSlider(products: products), // Use all products
+                    CustomSlider(
+                      products: products != null ? products : [],
+                      isLoading: products == null || products.isEmpty,
+                    ),
                   ],
                 ),
             ],

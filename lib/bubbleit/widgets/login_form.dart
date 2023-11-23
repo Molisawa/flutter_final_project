@@ -2,7 +2,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/screens/screens.dart';
-import 'package:flutter_final_project/bubbleit/screens/sign_in/sign_in.dart';
+import 'package:flutter_final_project/bubbleit/screens/sign_up/sign_up.dart';
 import '../screens/consts/consts.dart';
 import 'custom_textfield.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -87,7 +87,7 @@ class LoginForm extends StatelessWidget {
           onPressed: () {
             //este para que peudan ver la app, pero despues si quieren ahcer un pedido se debe ejecutar auth
             Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const SigninScreen()));
+                MaterialPageRoute(builder: (context) => const SignupScreen()));
           },
           backgroundColor: kItesoGray,
         ),
