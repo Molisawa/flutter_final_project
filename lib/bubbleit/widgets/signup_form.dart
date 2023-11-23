@@ -11,12 +11,16 @@ import 'custom_button.dart'; // Importa el widget CustomButton
 
 class SignupForm extends StatelessWidget {
   SignupForm({super.key});
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
-  Future<bool> registerWithEmailAndPassword(String email, String password, String confirmPassword) async {
-    if(password != confirmPassword){
+  Future<bool> registerWithEmailAndPassword(
+      String email, String password, String confirmPassword) async {
+    if (password != confirmPassword) {
       return false;
     }
     try {
@@ -31,15 +35,16 @@ class SignupForm extends StatelessWidget {
         return false;
       } else {
         // Crear un nuevo usuario en Firebase Authentication
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
         // El usuario no existe, registrar en la base de datos
         await FirebaseFirestore.instance.collection('users').add({
+          'name': _nameController.text,
+          'username': _usernameController.text,
           'email': email,
           'password': password,
-          // Otros campos de usuario si es necesario
         });
         return true;
       }
@@ -51,8 +56,21 @@ class SignupForm extends StatelessWidget {
   }
 
   void _attemptRegistration(BuildContext context) async {
+    //primero checamos si las contraseñas sin identicas, si no, ni tiene sentido hacer el reggistration
+    if (_passwordController.text != _confirmPasswordController.text) {
+      Flushbar(
+        title: "Error",
+        message: "Las contraseñas no coinciden",
+        duration: const Duration(seconds: 3),
+        margin: const EdgeInsets.all(8),
+        borderRadius: BorderRadius.circular(8),
+      ).show(context);
+      return;
+    }
     bool registrationSuccessful = await registerWithEmailAndPassword(
-        _emailController.text, _passwordController.text, _confirmPasswordController.text);
+        _emailController.text,
+        _passwordController.text,
+        _confirmPasswordController.text);
 
     if (registrationSuccessful) {
       Flushbar(
@@ -64,7 +82,8 @@ class SignupForm extends StatelessWidget {
       ).show(context);
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-            builder: (context) => const HomeScreen()), // Replace with your HomeScreen
+            builder: (context) =>
+                const HomeScreen()), // Replace with your HomeScreen
       );
       // Puedes redirigir a la pantalla de inicio de sesión o a otra pantalla después del registro
     } else {
@@ -93,42 +112,54 @@ class SignupForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        CustomTextField(labelText: 'Usuario', controller: _emailController, obscureText: false),
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: CustomTextField(
+                labelText: 'Nombre',
+                controller: _nameController,
+                obscureText: false,
+              ),
+            ),
+            const SizedBox(width: 8.0),
+            Expanded(
+              child: CustomTextField(
+                labelText: 'Nombre de usuario',
+                controller: _usernameController,
+                obscureText: false,
+              ),
+            ),
+          ],
+        ),
         const SizedBox(height: 12.0),
         CustomTextField(
-            labelText: 'Contraseña', controller: _passwordController, obscureText: true),
+          labelText: 'Correo electrónico',
+          controller: _emailController,
+          obscureText: false,
+        ),
         const SizedBox(height: 12.0),
         CustomTextField(
-            labelText: 'Confirm Contraseña', controller: _confirmPasswordController, obscureText: true),
-        const SizedBox(height: 20.0),
+          labelText: 'Contraseña',
+          controller: _passwordController,
+          obscureText: true,
+        ),
+        const SizedBox(height: 12.0),
+        CustomTextField(
+          labelText: 'Confirmar contraseña',
+          controller: _confirmPasswordController,
+          obscureText: true,
+        ),
+        const SizedBox(height: 50.0),
         CustomButton(
-          text: 'Register',
+          text: 'Registrar',
           onPressed: () {
             _attemptRegistration(context);
           },
           backgroundColor: kItesoBlueLight,
         ),
-        const SizedBox(height: 16.0),
-        CustomButton(
-          text: 'Sign In',
-          onPressed: () {
-            const duration = Duration(milliseconds: 500);
-            //este para que peudan ver la app, pero despues si quieren ahcer un pedido se debe ejecutar auth
-            Navigator.of(context).push(
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    const LoginScreen(),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  return ScaleTransition(scale: animation, child: child);
-                },
-                transitionDuration: duration,
-              ),
-            );
-          },
-          backgroundColor: kItesoGray,
-        ),
       ],
     );
   }
 }
+
+
