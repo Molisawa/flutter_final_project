@@ -18,39 +18,35 @@ class SignupForm extends StatelessWidget {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
+// o sea al chile si es medio inecesaria pero como ya me puse a haer que la otra sea promesa, ya ni pedo
   Future<bool> registerWithEmailAndPassword(
-      String email, String password, String confirmPassword) async {
-    if (password != confirmPassword) {
-      return false;
-    }
+      BuildContext context, String email, String password) async {
     try {
-      // Verificar si el usuario ya existe en la base de datos antes de registrar
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('users')
-          .where('email', isEqualTo: email)
-          .get();
+      // Create a new user with Firebase Authentication
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
 
-      if (querySnapshot.docs.isNotEmpty) {
-        // El usuario ya existe, mostrar un mensaje de error
-        return false;
-      } else {
-        // Crear un nuevo usuario en Firebase Authentication
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: email,
-          password: password,
-        );
-        // El usuario no existe, registrar en la base de datos
-        await FirebaseFirestore.instance.collection('users').add({
-          'name': _nameController.text,
-          'username': _usernameController.text,
-          'email': email,
-          'password': password,
-        });
-        return true;
-      }
+      // Check if the user creation was successful
+      return userCredential.user != null;
+    } on FirebaseAuthException catch (e) {
+      // Handle different Firebase Auth errors, such as email already in use
+      Flushbar(
+        title: "Error de Autenticación",
+        message: e.message ?? "Error desconocido",
+        duration: const Duration(seconds: 3),
+        margin: const EdgeInsets.all(8),
+        borderRadius: BorderRadius.circular(8),
+      ).show(context);
+      return false;
     } catch (e) {
-      print(e);
-      print("Error al registrar usuario " + email);
+      // Handle any other errors
+      Flushbar(
+        title: "Error",
+        message: "Ha ocurrido un error: ${e.toString()}",
+        duration: const Duration(seconds: 3),
+        margin: const EdgeInsets.all(8),
+        borderRadius: BorderRadius.circular(8),
+      ).show(context);
       return false;
     }
   }
@@ -67,45 +63,36 @@ class SignupForm extends StatelessWidget {
       ).show(context);
       return;
     }
-    bool registrationSuccessful = await registerWithEmailAndPassword(
-        _emailController.text,
-        _passwordController.text,
-        _confirmPasswordController.text);
-
-    if (registrationSuccessful) {
+    if (_nameController.text.isEmpty ||
+        _usernameController.text.isEmpty ||
+        _emailController.text.isEmpty ||
+        _passwordController.text.isEmpty ||
+        _confirmPasswordController.text.isEmpty) {
       Flushbar(
-        title: "Registro Exitoso",
-        message: "Usuario registrado correctamente",
+        title: "Error",
+        message: "Aún hay campos vacíos",
         duration: const Duration(seconds: 3),
         margin: const EdgeInsets.all(8),
         borderRadius: BorderRadius.circular(8),
       ).show(context);
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-            builder: (context) =>
-                const HomeScreen()), // Replace with your HomeScreen
-      );
-      // Puedes redirigir a la pantalla de inicio de sesión o a otra pantalla después del registro
-    } else {
-      if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
-        Flushbar(
-          title: "Error",
-          message: "Usuario o contraseña vacíos",
-          duration: const Duration(seconds: 3),
-          margin: const EdgeInsets.all(8),
-          borderRadius: BorderRadius.circular(8),
-        ).show(context);
-        return;
-      } else {
-        Flushbar(
-          title: "Error",
-          message: "El usuario ya existe",
-          duration: const Duration(seconds: 3),
-          margin: const EdgeInsets.all(8),
-          borderRadius: BorderRadius.circular(8),
-        ).show(context);
-      }
+      return;
     }
+
+    registerWithEmailAndPassword(
+            context, _emailController.text, _passwordController.text)
+        .then((registrationSuccessful) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
+      );
+    }).catchError((error) {
+      Flushbar(
+        title: "Error",
+        message: "Ha ocurrido un error: ${error.toString()}",
+        duration: const Duration(seconds: 3),
+        margin: const EdgeInsets.all(8),
+        borderRadius: BorderRadius.circular(8),
+      ).show(context);
+    });
   }
 
   @override
@@ -161,5 +148,3 @@ class SignupForm extends StatelessWidget {
     );
   }
 }
-
-

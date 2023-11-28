@@ -5,7 +5,6 @@ import 'package:flutter_final_project/bubbleit/widgets/custom_bottombar.dart';
 import 'package:flutter_final_project/bubbleit/widgets/product_description.dart';
 import 'package:provider/provider.dart';
 
-
 // Include necessary imports for ProductDescriptionWidget and its dependencies
 
 class ProductDetailScreen extends StatelessWidget {
@@ -33,7 +32,7 @@ class ProductDetailScreen extends StatelessWidget {
                   children: [
                     Center(
                       child: Image.asset(
-                        product['image'],
+                        product['imageUrl'],
                         width: 200, // You can adjust the size as needed.
                         height: 200,
                         fit: BoxFit.cover,
@@ -64,11 +63,7 @@ class ProductDetailScreen extends StatelessWidget {
                     const SizedBox(height: 20),
                     const ProductDescriptionWidget(
                       milkOptions: ["Almendra", "Entera", "Light"],
-                      toppingOptions: [
-                        "Tapioca 1",
-                        "Tapioca 2",
-                        "Tapioca 3"
-                      ],
+                      toppingOptions: ["Tapioca 1", "Tapioca 2", "Tapioca 3"],
                       sizeOptions: ["Chico", "Mediano", "Grande"],
                       sugarOptions: ["Sin azucar", "Moderado", "Azucar"],
                     ),
