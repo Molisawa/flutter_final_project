@@ -28,6 +28,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   Future<void> loadCartData() async {
     await Hive.openBox('cart');
     cartBox = Hive.box('cart');
+    print(cartBox.values);
     productsData = [];
 
     for (var cartItem in cartBox.values) {
