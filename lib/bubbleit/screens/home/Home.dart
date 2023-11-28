@@ -48,10 +48,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return await Permission.storage.request();
   }
 
-  // Future<PermissionStatus> _requestPermissionNotifications() async {
-  //   return await Permission.notification.request();
-  // }
-
   Future<void> _requestBasePermissions() async {
     PermissionStatus storage = await _requestPermissionStorage();
 

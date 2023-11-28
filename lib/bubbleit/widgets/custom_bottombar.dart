@@ -1,24 +1,58 @@
 import 'package:another_flushbar/flushbar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 import 'package:flutter_final_project/bubbleit/screens/screens.dart';
+import 'package:hive/hive.dart';
 
 import 'package:provider/provider.dart';
 
 class BottomBarWidget extends StatefulWidget {
-  const BottomBarWidget({super.key});
+  final dynamic product;
+  final List<String> selectedValues;
+  BottomBarWidget({super.key, required this.product, required this.selectedValues,});
 
   @override
   _BottomBarWidgetState createState() => _BottomBarWidgetState();
+
+  final CollectionReference products =
+      FirebaseFirestore.instance.collection('products');
 }
 
 class _BottomBarWidgetState extends State<BottomBarWidget> {
   int itemCount = 1;
   bool isButtonActivated = false;
 
+  Future<String?> getProductsId() async {
+    QuerySnapshot querySnapshot = await widget.products.get();
+
+    for (var doc in querySnapshot.docs) {
+      if(doc['name'] == widget.product['name']){
+        return doc.id;
+      }
+    }
+    return null;
+  }
+
+  void showFlushbar(){
+    Flushbar(
+      title: 'Añadido al carrito',
+      message: 'Se ha añadido el producto al carrito',
+      duration: const Duration(seconds: 3),
+      backgroundColor: kItesoBlue,
+      margin: const EdgeInsets.all(8),
+      borderRadius: BorderRadius.circular(8),
+    ).show(context);
+  }
+  
+
   @override
   Widget build(BuildContext context) {
+
     final isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
+    double total = itemCount * double.parse(widget.product['price']);
+
     return BottomAppBar(
       elevation: 0.0,
       color: isDarkMode ? Colors.grey[900] : Colors.white,
@@ -86,24 +120,31 @@ class _BottomBarWidgetState extends State<BottomBarWidget> {
                   ),
                 ),
               ),
-              onPressed: () {
+              onPressed: () async {
                 // Acción cuando se presiona el botón azul
+                String? productID = await getProductsId();
+
+                final Box<dynamic> cartBox = Hive.box('cart');
+
+                // List<dynamic> cartProduct = [];
+                cartBox.add({
+                  'product': productID,
+                  'quantity': itemCount,
+                  'milk': widget.selectedValues[0],
+                  'tapiocaLvl': widget.selectedValues[1],
+                  'size': widget.selectedValues[2],
+                  'azucar': widget.selectedValues[3],
+                });
+
                 isButtonActivated
                     ? null
-                    : Flushbar(
-                        title: 'Añadido al carrito',
-                        message: 'Se ha añadido el producto al carrito',
-                        duration: const Duration(seconds: 3),
-                        backgroundColor: kItesoBlue,
-                        margin: const EdgeInsets.all(8),
-                        borderRadius: BorderRadius.circular(8),
-                      ).show(context);
+                    : showFlushbar();
                 setState(() {
                   isButtonActivated = true;
                 });
               },
-              child: const Text(
-                'Add \$19.89',
+              child: Text(
+                'Add \$ ${total.toStringAsFixed(2)}',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
