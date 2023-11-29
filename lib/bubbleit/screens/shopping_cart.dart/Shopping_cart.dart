@@ -83,9 +83,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if(productsData.isEmpty){
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const EmptyCart();
+
           }
           return Column(
             children: [
@@ -228,6 +227,37 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   }
 }
 
+class EmptyCart extends StatelessWidget {
+  const EmptyCart({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center, // Centra verticalmente en la pantalla
+        children: [
+          Image(
+            image: AssetImage('assets/images/cartEmpty.png'),
+            width: 200,
+            height: 200,
+          ),
+          SizedBox(height: 20), // Agrega un espacio entre la imagen y el texto
+          Text(
+            'Your cart is empty',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class BottomBar extends StatelessWidget {
   const BottomBar({
     Key? key,
@@ -260,10 +290,10 @@ class BottomBar extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Padding(
-                  padding: EdgeInsets.only(left: 18.0),
+                  padding: const EdgeInsets.only(left: 18.0),
                   child: Text(
                     '\$${calculateSubtotal().toStringAsFixed(2)}',
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
                         color: Colors.grey),
