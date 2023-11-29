@@ -5,20 +5,54 @@ import 'package:flutter_final_project/bubbleit/widgets/custom_bottombar.dart';
 import 'package:flutter_final_project/bubbleit/widgets/product_description.dart';
 import 'package:provider/provider.dart';
 
-// Include necessary imports for ProductDescriptionWidget and its dependencies
-
-class ProductDetailScreen extends StatelessWidget {
+class ProductDetailScreen extends StatefulWidget {
   static String routeName = '/product_detail';
   final dynamic product;
 
-  const ProductDetailScreen({super.key, required this.product});
+  ProductDetailScreen({Key? key, required this.product}) : super(key: key);
+
+  @override
+  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+}
+
+class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  late String _selectedMilk = "";
+  late String _selectedTopping = "";
+  late String _selectedSize = "";
+  late String _selectedSugar = "";
+
+  bool _valuesComplete = false;
+
+  void _updateSelectedValues(
+    String selectedMilk,
+    String selectedTopping,
+    String selectedSize,
+    String selectedSugar,
+  ) {
+    setState(() {
+      _selectedMilk = selectedMilk;
+      _selectedTopping = selectedTopping;
+      _selectedSize = selectedSize;
+      _selectedSugar = selectedSugar;
+      _checkValuesCompleteness();
+    });
+  }
+
+  void _checkValuesCompleteness() async {
+  // Verificar si los valores necesarios están completos
+    _valuesComplete = _selectedMilk.isNotEmpty &&
+         _selectedTopping.isNotEmpty &&
+         _selectedSize.isNotEmpty &&
+         _selectedSugar.isNotEmpty;
+  }
 
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(product['name'] ?? 'Product Detail'),
+        title: Text(widget.product['name'] ?? 'Product Detail', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         backgroundColor: isDarkMode ? Colors.grey[900] : kItesoBlueLight,
       ),
       body: Column(
@@ -32,15 +66,15 @@ class ProductDetailScreen extends StatelessWidget {
                   children: [
                     Center(
                       child: Image.asset(
-                        product['imageUrl'],
-                        width: 200, // You can adjust the size as needed.
+                        widget.product['imageUrl'],
+                        width: 200,
                         height: 200,
                         fit: BoxFit.cover,
                       ),
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      product['name'] ?? 'Unknown Product',
+                      widget.product['name'] ?? 'Unknown Product',
                       style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -48,31 +82,42 @@ class ProductDetailScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      product['price'] ?? 'No price available.',
+                      '\$' +
+                      widget.product['price'] ?? 'No price available.',
                       style: const TextStyle(
                         fontSize: 16,
                       ),
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      product['description'] ?? 'No description available.',
+                      widget.product['description'] ?? 'No description available.',
                       style: const TextStyle(
                         fontSize: 16,
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const ProductDescriptionWidget(
+                    ProductDescriptionWidget(
                       milkOptions: ["Almendra", "Entera", "Light"],
                       toppingOptions: ["Tapioca 1", "Tapioca 2", "Tapioca 3"],
                       sizeOptions: ["Chico", "Mediano", "Grande"],
                       sugarOptions: ["Sin azucar", "Moderado", "Azucar"],
+                      onValuesSelected: _updateSelectedValues,
                     ),
                   ],
                 ),
               ),
             ),
           ),
-          const BottomBarWidget(),
+          if (_valuesComplete)
+            BottomBarWidget(
+              product: widget.product,
+              selectedValues: [_selectedMilk, _selectedTopping, _selectedSize, _selectedSugar],
+          )
+          else
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: const Text('Seleccione sus opciones', style: TextStyle(fontSize: 15)),
+            ),
         ],
       ),
     );
