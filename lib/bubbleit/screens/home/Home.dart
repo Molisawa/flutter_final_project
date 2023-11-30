@@ -18,7 +18,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int currIndex = 0;
   late PageController _pageController;
-
   final List<Widget> _screens = [];
 
   @override
@@ -34,12 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
       const RewardsScreen(),
     ]);
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
   }
 
   Future<PermissionStatus> _requestPermissionStorage() async {
@@ -63,28 +56,21 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  ValueNotifier<bool> isMapInteracting = ValueNotifier(false);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kItesoBlue,
-      body: ValueListenableBuilder<bool>(
-        valueListenable: isMapInteracting,
-        builder: (context, isInteracting, child) {
-          return PageView(
-            controller: _pageController,
-            onPageChanged: (index) {
-              setState(() {
-                currIndex = index;
-              });
-            },
-            physics: isInteracting
-                ? const NeverScrollableScrollPhysics()
-                : const AlwaysScrollableScrollPhysics(),
-            children: _screens,
-          );
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            currIndex = index;
+          });
         },
+        physics: currIndex == 2
+            ? const NeverScrollableScrollPhysics()
+            : const AlwaysScrollableScrollPhysics(),
+        children: _screens,
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.blue,
@@ -118,6 +104,13 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    isMapInteracting.dispose();
+    _pageController.dispose();
+    super.dispose();
   }
 }
 

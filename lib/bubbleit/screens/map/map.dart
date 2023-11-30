@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
+  
   static String routeName = '/map';
 
   @override
@@ -12,7 +14,6 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   late GoogleMapController mapController;
-  ValueNotifier<bool> isMapInteracting = ValueNotifier(false);
 
   @override
   void initState() {
@@ -45,12 +46,6 @@ class _MapScreenState extends State<MapScreen> {
             child: GoogleMap(
               onMapCreated: (GoogleMapController controller) {
                 mapController = controller;
-              },
-              onCameraMoveStarted: () {
-                isMapInteracting.value = true;
-              },
-              onCameraIdle: () {
-                isMapInteracting.value = false;
               },
               initialCameraPosition: const CameraPosition(
                 target: LatLng(20.606885713632032,
