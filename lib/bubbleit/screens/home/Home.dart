@@ -108,7 +108,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
-    isMapInteracting.dispose();
     _pageController.dispose();
     super.dispose();
   }
