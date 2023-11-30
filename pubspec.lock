@@ -194,21 +194,21 @@ packages:
     source: hosted
     version: "2.8.1"
   firebase_dynamic_links:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: firebase_dynamic_links
-      sha256: d57ec2b08e20282936c02de4dcb219f03ea92fc97722ae479f9b186ca8c01f3c
+      sha256: "1828653739e5cea3bad232cfa013f75f50f82924cb9f550c90de63545218d25d"
       url: "https://pub.dev"
     source: hosted
-    version: "5.4.4"
+    version: "5.4.5"
   firebase_dynamic_links_platform_interface:
     dependency: transitive
     description:
       name: firebase_dynamic_links_platform_interface
-      sha256: "86e89f063a6018ccd9ea84b6093f7a27fe37cd95b86fb6f02d632b14ae8cb06d"
+      sha256: "2995e0082b5bc99bc398c29bf20daaeed84ea4228540b7fbc21032c3d1cfdeec"
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.6+12"
+    version: "0.2.6+13"
   firebase_ui_auth:
     dependency: "direct main"
     description:

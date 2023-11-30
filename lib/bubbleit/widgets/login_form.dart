@@ -87,7 +87,7 @@ class LoginForm extends StatelessWidget {
             Navigator.of(context).pushReplacement(
               PageRouteBuilder(
                 pageBuilder: (context, animation, secondaryAnimation) =>
-                    const AuthWrapper(),
+                    const HomeScreen(),
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) {
                   return ScaleTransition(scale: animation, child: child);
