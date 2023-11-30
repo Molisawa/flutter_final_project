@@ -9,7 +9,10 @@ import 'package:provider/provider.dart';
 
 class OrderDetailScreen extends StatefulWidget {
   const OrderDetailScreen({
-    super.key, required this.productsData, required this.quantities, required this.subtotal,
+    super.key,
+    required this.productsData,
+    required this.quantities,
+    required this.subtotal,
   });
   final List<Map<String, dynamic>> productsData;
   final List<int> quantities;
@@ -17,29 +20,25 @@ class OrderDetailScreen extends StatefulWidget {
   static String routeName = '/order_detail';
 
   @override
-  State<OrderDetailScreen> createState() => _OrderDetailScreen();
+  State<OrderDetailScreen> createState() => _OrderDetailScreenState();
 }
 
-class _OrderDetailScreen extends State<OrderDetailScreen> {
+class _OrderDetailScreenState extends State<OrderDetailScreen> {
   List<dynamic> payment = [];
   bool _isOrderPlaced = false;
-  String username = '';
+  String userName = "";
 
   @override
   void initState() {
     super.initState();
-    print('OrderDetailScreen: ${widget.productsData}');
-    print('OrderDetailScreen: ${widget.quantities}');
-    print('OrderDetailScreen: ${widget.subtotal}');
     obtenerInformacionUsuario();
     payment = jsonDecode(PaymentBubble);
   }
 
   void obtenerInformacionUsuario() {
     User? usuarioActual = FirebaseAuth.instance.currentUser;
-
     if (usuarioActual != null) {
-      username = usuarioActual.displayName ?? '';
+      userName = usuarioActual.displayName ?? '';
     } else {
       print('No hay usuario autenticado');
     }
@@ -48,6 +47,7 @@ class _OrderDetailScreen extends State<OrderDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -65,30 +65,15 @@ class _OrderDetailScreen extends State<OrderDetailScreen> {
             },
           ),
           actions: const <Widget>[
-            Column(
-              children: [
-                SizedBox(height: 20),
-                Text(
-                  'Empty',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.white),
-                ),
-              ],
-            ),
             SizedBox(width: 15),
           ],
         ),
-        body: 
-        Stack(
+        body: Stack(
           children: [
             Container(
               color: kItesoBlue,
-              width: MediaQuery.of(context)
-                  .size
-                  .width, // Ancho igual al ancho de la pantalla
-              height: MediaQuery.of(context)
-                  .size
-                  .height, // Alto igual al alto de la pantalla
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
               child: Column(
                 children: [
                   const SizedBox(height: 20),
@@ -124,7 +109,7 @@ class _OrderDetailScreen extends State<OrderDetailScreen> {
                                           ? Colors.white
                                           : Colors.black,
                                     )),
-                                Text(username.toUpperCase(),
+                                Text(userName,
                                     style: TextStyle(
                                       color: isDarkMode
                                           ? Colors.white
@@ -179,62 +164,45 @@ class _OrderDetailScreen extends State<OrderDetailScreen> {
                                           fontWeight: FontWeight.bold))
                                 ],
                               ),
-                              // TODO: Integrate the ListView.builder for products here. You can convert each list item to a TableRow.
-                              TableRow(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 16.0, horizontal: 4.0),
-                                    child: Text("Coffe Bubble Tea",
+                              // Dynamic product rows
+                              ...List<TableRow>.generate(
+                                  widget.productsData.length, (index) {
+                                return TableRow(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 16.0, horizontal: 4.0),
+                                      child: Text(
+                                        widget.productsData[index][
+                                            'name'], // Replace 'name' with your actual key
                                         style: TextStyle(
-                                            color: isDarkMode
-                                                ? const Color.fromARGB(
-                                                    255, 220, 253, 250)
-                                                : Colors.blue,
-                                            fontWeight: FontWeight.bold)),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 16.0, horizontal: 4.0),
-                                    child: Text("x1",
+                                          color: isDarkMode
+                                              ? const Color.fromARGB(
+                                                  255, 220, 253, 250)
+                                              : Colors.blue,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 16.0, horizontal: 4.0),
+                                      child: Text(
+                                        "x${widget.quantities[index]}",
                                         textAlign: TextAlign.end,
                                         style: TextStyle(
-                                            color: isDarkMode
-                                                ? const Color.fromARGB(
-                                                    255, 220, 253, 250)
-                                                : Colors.blue,
-                                            fontWeight: FontWeight.bold)),
-                                  ),
-                                ],
-                              ),
-                              TableRow(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 16.0, horizontal: 4.0),
-                                    child: Text("Coffe Bubble Tea",
-                                        style: TextStyle(
-                                            color: isDarkMode
-                                                ? const Color.fromARGB(
-                                                    255, 220, 253, 250)
-                                                : Colors.blue,
-                                            fontWeight: FontWeight.bold)),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 16.0, horizontal: 4.0),
-                                    child: Text("x1",
-                                        textAlign: TextAlign.end,
-                                        style: TextStyle(
-                                            color: isDarkMode
-                                                ? const Color.fromARGB(
-                                                    255, 220, 253, 250)
-                                                : Colors.blue,
-                                            fontWeight: FontWeight.bold)),
-                                  ),
-                                ],
-                              ),
-                              // ... Add more product rows if needed
+                                          color: isDarkMode
+                                              ? const Color.fromARGB(
+                                                  255, 220, 253, 250)
+                                              : Colors.blue,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }),
+                              // Static last row
                               TableRow(
                                 children: [
                                   Text("Service Fee",
@@ -285,11 +253,11 @@ class _OrderDetailScreen extends State<OrderDetailScreen> {
                             ),
                           ),
                           const SizedBox(height: 5),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 18.0),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 18.0),
                             child: Text(
-                              '\$98.00',
-                              style: TextStyle(
+                              '\$ ${widget.subtotal + 6.90}',
+                              style: const TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.grey),
@@ -300,15 +268,14 @@ class _OrderDetailScreen extends State<OrderDetailScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        // Agrega aquí la lógica para lo que deseas hacer al tocar este área.
+                        // Logic for this area...
                       },
                       child: ElevatedButton(
                         style: ButtonStyle(
                           minimumSize:
                               MaterialStateProperty.all(const Size(200, 60)),
                           backgroundColor: MaterialStateProperty.all(
-                            isDarkMode ? Colors.grey[800] : kItesoBlueLight,
-                          ),
+                              isDarkMode ? Colors.grey[800] : kItesoBlueLight),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
@@ -320,8 +287,8 @@ class _OrderDetailScreen extends State<OrderDetailScreen> {
                           _isOrderPlaced
                               ? null
                               : Flushbar(
-                                  title: 'Order puesta',
-                                  message: 'Tu orden ha sido puesta',
+                                  title: 'Order Placed',
+                                  message: 'Your order has been placed',
                                   duration: const Duration(seconds: 3),
                                   backgroundColor: kItesoBlue,
                                   margin: const EdgeInsets.all(8),
