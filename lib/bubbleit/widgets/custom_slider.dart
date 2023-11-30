@@ -4,7 +4,7 @@ import 'package:flutter_final_project/bubbleit/screens/screens.dart';
 class CustomSlider extends StatefulWidget {
   final List<dynamic> products;
 
-  const CustomSlider({Key? key, required this.products}) : super(key: key);
+  const CustomSlider({super.key, required this.products});
 
   @override
   State<CustomSlider> createState() => _CustomSliderState();
@@ -43,7 +43,7 @@ class _CustomSliderState extends State<CustomSlider> {
                       children: [
                         // Background Image (Smaller)
                         Image.asset(
-                          product['image'],
+                          product['imageUrl'],
                           width: 120.0,
                           height:
                               150.0, // Adjust the height to make the image smaller

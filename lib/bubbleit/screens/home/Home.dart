@@ -1,6 +1,7 @@
 // import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_final_project/bubbleit/data/data.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 import 'package:flutter_final_project/bubbleit/screens/screens.dart';
@@ -10,7 +11,7 @@ import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   static String routeName = '/home';
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -46,10 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<PermissionStatus> _requestPermissionStorage() async {
     return await Permission.storage.request();
   }
-
-  // Future<PermissionStatus> _requestPermissionNotifications() async {
-  //   return await Permission.notification.request();
-  // }
 
   Future<void> _requestBasePermissions() async {
     PermissionStatus storage = await _requestPermissionStorage();
@@ -117,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class HomeContent extends StatefulWidget {
-  const HomeContent({super.key});
+  const HomeContent({Key? key}) : super(key: key);
 
   @override
   State<HomeContent> createState() => _HomeContentState();
@@ -127,6 +124,25 @@ class _HomeContentState extends State<HomeContent> {
   List<dynamic> products = [];
   double appBarHeight = 100.0;
   ScrollController scrollController = ScrollController();
+  bool isLoading=true;
+  late Future<void> dataFuture;
+
+  Future<void> getData() async {
+    try {
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection('products').get();
+
+      setState(() {
+        products = querySnapshot.docs.map((doc) => doc.data()).toList();
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> initData() async {
+    await getData();
+  }
 
   @override
   void initState() {
@@ -136,7 +152,7 @@ class _HomeContentState extends State<HomeContent> {
         // The listener will call setState whenever the scroll position changes.
       });
     });
-    products = jsonDecode(BubbleIT);
+    dataFuture = initData();
   }
 
   @override
@@ -146,79 +162,87 @@ class _HomeContentState extends State<HomeContent> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
+Widget build(BuildContext context) {
+  final isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
 
-    return CustomScrollView(
-      controller: scrollController,
-      physics: const BouncingScrollPhysics(),
-      slivers: [
-        SliverAppBar(
-          backgroundColor: () {
-            double blendFactor =
-                (scrollController.hasClients ? scrollController.offset : 0) /
-                    100.0;
-            blendFactor =
-                blendFactor.clamp(0.0, 1.0); // Ensure it's between 0 and 1
-            // Interpolate between the two colors based on the blend factor.
-            return isDarkMode
-                ? Colors.grey[900] // Reemplaza con tu color para el tema oscuro
-                : Color.lerp(kItesoBlueLight, kItesoBlue, blendFactor)!;
-          }(), // Color de fondo transparente inicial
-
-          elevation: 1, // Sin sombra
-          pinned:
-              true, // La AppBar se fija en la parte superior al hacer scroll
-          title: const Text('BubbleIT',
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-          centerTitle: true, // Título del AppBar
-          leading: IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {
-              // go to //settings
-              Navigator.pushNamed(context, '/settings');
-            },
-          ),
-        ),
-        SliverToBoxAdapter(
-          child: Column(
-            children: [
-              const ImageCarousel(imageList: [
-                'assets/images/welcome_banner.png',
-                'assets/images/welcome_banner1.png',
-                'assets/images/welcome_banner.png',
-                'assets/images/welcome_banner1.png',
-              ]),
-              // Secciones con Sliders
-              for (var sectionTitle in [
-                'Top Sales',
-                'Seasonals',
-                'Specials',
-                'Favorites'
-              ])
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        sectionTitle,
-                        style: const TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
+  return FutureBuilder(
+    future: dataFuture,
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return const Center(child: CircularProgressIndicator());
+      } else if(snapshot.hasError){
+        return Center(child: Text('Error: ${snapshot.error}'));
+      } else {
+        return CustomScrollView(
+          controller: scrollController,
+          physics: const BouncingScrollPhysics(),
+          slivers: [
+            SliverAppBar(
+              backgroundColor: () {
+                double blendFactor =
+                    (scrollController.hasClients ? scrollController.offset : 0) /
+                        100.0;
+                blendFactor =
+                    blendFactor.clamp(0.0, 1.0); // Ensure it's between 0 and 1
+                // Interpolate between the two colors based on the blend factor.
+                return isDarkMode
+                    ? Colors.grey[900] // Replace with your color for dark mode
+                    : Color.lerp(kItesoBlueLight, kItesoBlue, blendFactor)!;
+              }(),
+              elevation: 1,
+              pinned: true,
+              title: const Text(
+                'BubbleIT',
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+              centerTitle: true,
+              leading: IconButton(
+                icon: const Icon(Icons.menu),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/settings');
+                },
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  const ImageCarousel(imageList: [
+                    'assets/images/welcome_banner.png',
+                    'assets/images/welcome_banner1.png',
+                    'assets/images/welcome_banner.png',
+                    'assets/images/welcome_banner1.png',
+                  ]),
+                  for (var sectionTitle in [
+                    'Top Sales',
+                    'Seasonals',
+                    'Specials',
+                    'Favorites'
+                  ])
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            sectionTitle,
+                            style: const TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
-                      ),
+                        const SizedBox(height: 12.0),
+                        CustomSlider(products: products),
+                      ],
                     ),
-                    const SizedBox(height: 12.0),
-                    CustomSlider(products: products), // Use all products
-                  ],
-                ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
+                ],
+              ),
+            ),
+          ],
+        );
+      }
+    },
+  );
+}
 }
 
 class ImageCarousel extends StatelessWidget {

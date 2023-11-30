@@ -1,80 +1,65 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/screens/screens.dart';
-import 'package:flutter_final_project/bubbleit/widgets/auth_wrapper.dart';
-import 'package:flutter_final_project/bubbleit/widgets/auth_wrapper.dart';
+import 'package:flutter_final_project/bubbleit/screens/sign_up/sign_up.dart';
 import '../screens/consts/consts.dart';
 import 'custom_textfield.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'custom_button.dart'; // Importa el widget CustomButton
+import 'custom_button.dart';
 
 class LoginForm extends StatelessWidget {
   LoginForm({super.key});
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  String _email = 'testing';
-  String _password = '';
-
-  Future<bool> signInWithEmailAndPassword(String email, String password) async {
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-      User? user = userCredential.user;
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('users')
-          .where('email', isEqualTo: email)
-          .where('password', isEqualTo: password)
-          .get();
-      if (querySnapshot.docs.isNotEmpty) {
-        print("yay");
-        return true;
-      } else {
-        print("nay");
-        return false;
-      }
-    } catch (e) {
-      // print(e);
-
-      return false;
-    }
-  }
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        CustomTextField(labelText: 'Usuario', controller: _emailController),
+        CustomTextField(
+          labelText: 'Correo',
+          controller: _emailController,
+          obscureText: false,
+        ),
         const SizedBox(height: 12.0),
         CustomTextField(
-            labelText: 'Contraseña', controller: _passwordController),
+          labelText: 'Contraseña',
+          controller: _passwordController,
+          obscureText: true,
+        ),
         const SizedBox(height: 20.0),
         CustomButton(
           text: 'Sign In',
           onPressed: () {
-            setState() {
-              _email = _email;
-              _passwordController.text = _password;
-            }
-
-            signInWithEmailAndPassword("testmoviles@test.com", "password123");
             if (_emailController.text.isEmpty ||
                 _passwordController.text.isEmpty) {
+              Flushbar(
+                title: "Error",
+                message: "Usuario o contraseña vacíos",
+                duration: const Duration(seconds: 3),
+                margin: const EdgeInsets.all(8),
+                borderRadius: BorderRadius.circular(8),
+              ).show(context);
               return;
             }
-            //por ahora ponemos la ruta así, porque no hemos visto la parte de auth
-            //no se deben factorizar porque en el futuro haran cosas distintas
-            const duration = Duration(milliseconds: 500);
-            Navigator.of(context).pushReplacement(
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    const AuthWrapper(),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  return FadeTransition(opacity: animation, child: child);
-                },
-                transitionDuration: duration,
-              ),
-            );
+
+            FirebaseAuth.instance
+                .signInWithEmailAndPassword(
+                    email: _emailController.text,
+                    password: _passwordController.text)
+                .then((userCredential) {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => const HomeScreen()),
+              );
+            }).catchError((error) {
+              Flushbar(
+                title: "Error",
+                message: "Usuario y/o contraseña incorrectos",
+                duration: const Duration(seconds: 3),
+                margin: const EdgeInsets.all(8),
+                borderRadius: BorderRadius.circular(8),
+              ).show(context);
+            });
           },
           backgroundColor: kItesoBlueLight,
         ),
@@ -82,19 +67,8 @@ class LoginForm extends StatelessWidget {
         CustomButton(
           text: 'Register',
           onPressed: () {
-            const duration = Duration(milliseconds: 500);
-            //este para que peudan ver la app, pero despues si quieren ahcer un pedido se debe ejecutar auth
-            Navigator.of(context).pushReplacement(
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    const HomeScreen(),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  return ScaleTransition(scale: animation, child: child);
-                },
-                transitionDuration: duration,
-              ),
-            );
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const SignupScreen()));
           },
           backgroundColor: kItesoGray,
         ),

@@ -4,7 +4,7 @@ import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart
 class AppBarWidget extends StatefulWidget {
   final bool isExpanded;
 
-  const AppBarWidget({Key? key, required this.isExpanded}) : super(key: key);
+  const AppBarWidget({super.key, required this.isExpanded});
 
   @override
   _AppBarWidgetState createState() => _AppBarWidgetState();
@@ -33,7 +33,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
         ),
       ),
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back),
+        icon: const Icon(Icons.arrow_back, color: Colors.white),
         onPressed: () {
           Navigator.of(context).pop();
         },

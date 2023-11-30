@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 
 class MapScreen extends StatefulWidget {
-  const MapScreen({Key? key}) : super(key: key);
+  const MapScreen({super.key});
   static String routeName = '/map';
 
   @override

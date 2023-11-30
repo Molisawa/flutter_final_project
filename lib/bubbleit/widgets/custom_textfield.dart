@@ -3,12 +3,16 @@ import '../screens/consts/consts.dart';
 
 class CustomTextField extends StatelessWidget {
   final String labelText;
+  final TextEditingController controller;
+  final bool obscureText;
 
-  const CustomTextField({super.key, required this.labelText, required TextEditingController controller});
+  const CustomTextField({super.key, required this.labelText, required this.controller, required this.obscureText});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
+      obscureText: obscureText,
       decoration: textFieldDecoration(labelText),
     );
   }
