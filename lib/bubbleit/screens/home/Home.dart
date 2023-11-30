@@ -63,18 +63,28 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  ValueNotifier<bool> isMapInteracting = ValueNotifier(false);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kItesoBlue,
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: (index) {
-          setState(() {
-            currIndex = index;
-          });
+      body: ValueListenableBuilder<bool>(
+        valueListenable: isMapInteracting,
+        builder: (context, isInteracting, child) {
+          return PageView(
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() {
+                currIndex = index;
+              });
+            },
+            physics: isInteracting
+                ? const NeverScrollableScrollPhysics()
+                : const AlwaysScrollableScrollPhysics(),
+            children: _screens,
+          );
         },
-        children: _screens,
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.blue,
@@ -122,7 +132,7 @@ class _HomeContentState extends State<HomeContent> {
   List<dynamic> products = [];
   double appBarHeight = 100.0;
   ScrollController scrollController = ScrollController();
-  bool isLoading=true;
+  bool isLoading = true;
   late Future<void> dataFuture;
 
   Future<void> getData() async {
@@ -160,87 +170,90 @@ class _HomeContentState extends State<HomeContent> {
   }
 
   @override
-Widget build(BuildContext context) {
-  final isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
+  Widget build(BuildContext context) {
+    final isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
 
-  return FutureBuilder(
-    future: dataFuture,
-    builder: (context, snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return const Center(child: CircularProgressIndicator());
-      } else if(snapshot.hasError){
-        return Center(child: Text('Error: ${snapshot.error}'));
-      } else {
-        return CustomScrollView(
-          controller: scrollController,
-          physics: const BouncingScrollPhysics(),
-          slivers: [
-            SliverAppBar(
-              backgroundColor: () {
-                double blendFactor =
-                    (scrollController.hasClients ? scrollController.offset : 0) /
-                        100.0;
-                blendFactor =
-                    blendFactor.clamp(0.0, 1.0); // Ensure it's between 0 and 1
-                // Interpolate between the two colors based on the blend factor.
-                return isDarkMode
-                    ? Colors.grey[900] // Replace with your color for dark mode
-                    : Color.lerp(kItesoBlueLight, kItesoBlue, blendFactor)!;
-              }(),
-              elevation: 1,
-              pinned: true,
-              title: const Text(
-                'BubbleIT',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+    return FutureBuilder(
+      future: dataFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else {
+          return CustomScrollView(
+            controller: scrollController,
+            physics: const BouncingScrollPhysics(),
+            slivers: [
+              SliverAppBar(
+                backgroundColor: () {
+                  double blendFactor = (scrollController.hasClients
+                          ? scrollController.offset
+                          : 0) /
+                      100.0;
+                  blendFactor = blendFactor.clamp(
+                      0.0, 1.0); // Ensure it's between 0 and 1
+                  // Interpolate between the two colors based on the blend factor.
+                  return isDarkMode
+                      ? Colors
+                          .grey[900] // Replace with your color for dark mode
+                      : Color.lerp(kItesoBlueLight, kItesoBlue, blendFactor)!;
+                }(),
+                elevation: 1,
+                pinned: true,
+                title: const Text(
+                  'BubbleIT',
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+                centerTitle: true,
+                leading: IconButton(
+                  icon: const Icon(Icons.menu),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/settings');
+                  },
+                ),
               ),
-              centerTitle: true,
-              leading: IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/settings');
-                },
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  const ImageCarousel(imageList: [
-                    'assets/images/welcome_banner.png',
-                    'assets/images/welcome_banner1.png',
-                    'assets/images/welcome_banner.png',
-                    'assets/images/welcome_banner1.png',
-                  ]),
-                  for (var sectionTitle in [
-                    'Top Sales',
-                    'Seasonals',
-                    'Specials',
-                    'Favorites'
-                  ])
-                    Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            sectionTitle,
-                            style: const TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
+              SliverToBoxAdapter(
+                child: Column(
+                  children: [
+                    const ImageCarousel(imageList: [
+                      'assets/images/welcome_banner.png',
+                      'assets/images/welcome_banner1.png',
+                      'assets/images/welcome_banner.png',
+                      'assets/images/welcome_banner1.png',
+                    ]),
+                    for (var sectionTitle in [
+                      'Top Sales',
+                      'Seasonals',
+                      'Specials',
+                      'Favorites'
+                    ])
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              sectionTitle,
+                              style: const TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 12.0),
-                        CustomSlider(products: products),
-                      ],
-                    ),
-                ],
+                          const SizedBox(height: 12.0),
+                          CustomSlider(products: products),
+                        ],
+                      ),
+                  ],
+                ),
               ),
-            ),
-          ],
-        );
-      }
-    },
-  );
-}
+            ],
+          );
+        }
+      },
+    );
+  }
 }
 
 class ImageCarousel extends StatelessWidget {

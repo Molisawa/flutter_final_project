@@ -85,7 +85,9 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (productsData.isEmpty) {
-            return const EmptyCart();
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }
           return Column(
             children: [

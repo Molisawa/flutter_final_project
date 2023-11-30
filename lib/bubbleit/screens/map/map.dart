@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_final_project/bubbleit/screens/settings/settings.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -13,6 +11,9 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
+  late GoogleMapController mapController;
+  ValueNotifier<bool> isMapInteracting = ValueNotifier(false);
+
   @override
   void initState() {
     super.initState();
@@ -36,19 +37,27 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Use Provider to determine if dark mode is enabled
-    final isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
-    // Set the appropriate background color based on the theme
-
     return Scaffold(
-      backgroundColor: kItesoBlue,
-      // Apply the background color here
       body: Column(
         children: <Widget>[
           Expanded(
             flex: 3,
-            child: Image.asset(
-                'assets/images/mapa1.png'), // Replace with your actual map image in assets
+            child: GoogleMap(
+              onMapCreated: (GoogleMapController controller) {
+                mapController = controller;
+              },
+              onCameraMoveStarted: () {
+                isMapInteracting.value = true;
+              },
+              onCameraIdle: () {
+                isMapInteracting.value = false;
+              },
+              initialCameraPosition: const CameraPosition(
+                target: LatLng(20.606885713632032,
+                    -103.41505788774599), // Coordenadas iniciales
+                zoom: 15.0,
+              ),
+            ),
           ),
           Expanded(
             flex: 2,
