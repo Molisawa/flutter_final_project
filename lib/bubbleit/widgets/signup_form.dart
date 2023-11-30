@@ -24,6 +24,10 @@ class SignupForm extends StatelessWidget {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
 
+      if (userCredential.user != null) {
+        await userCredential.user!.updateDisplayName(_usernameController.text);
+      }
+
       // Check if the user creation was successful
       return userCredential.user != null;
     } on FirebaseAuthException catch (e) {
