@@ -214,8 +214,7 @@ class _HomeContentState extends State<HomeContent> {
                     const ImageCarousel(imageList: [
                       'assets/images/welcome_banner.png',
                       'assets/images/welcome_banner1.png',
-                      'assets/images/welcome_banner.png',
-                      'assets/images/welcome_banner1.png',
+                      'assets/images/multipleDrinks_background.png',
                     ]),
                     for (var sectionTitle in [
                       'Top Sales',
