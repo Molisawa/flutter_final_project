@@ -23,13 +23,14 @@ class OrderDetailScreen extends StatefulWidget {
 class _OrderDetailScreen extends State<OrderDetailScreen> {
   List<dynamic> payment = [];
   bool _isOrderPlaced = false;
+  String username = '';
 
   @override
   void initState() {
     super.initState();
-    // print('OrderDetailScreen: ${widget.productsData}');
-    // print('OrderDetailScreen: ${widget.quantities}');
-    // print('OrderDetailScreen: ${widget.subtotal}');
+    print('OrderDetailScreen: ${widget.productsData}');
+    print('OrderDetailScreen: ${widget.quantities}');
+    print('OrderDetailScreen: ${widget.subtotal}');
     obtenerInformacionUsuario();
     payment = jsonDecode(PaymentBubble);
   }
@@ -38,13 +39,7 @@ class _OrderDetailScreen extends State<OrderDetailScreen> {
     User? usuarioActual = FirebaseAuth.instance.currentUser;
 
     if (usuarioActual != null) {
-      print('Usuario autenticado $usuarioActual');
-      print('ID del usuario: ${usuarioActual.uid}');
-      print('Correo electrónico: ${usuarioActual.email}');
-      print('Nombre de usuario: ${usuarioActual.displayName}');
-      print('Número de teléfono: ${usuarioActual.phoneNumber}');
-      print('Foto del perfil: ${usuarioActual.photoURL}');
-      // Otros detalles del usuario según tus necesidades
+      username = usuarioActual.displayName ?? '';
     } else {
       print('No hay usuario autenticado');
     }
@@ -83,7 +78,8 @@ class _OrderDetailScreen extends State<OrderDetailScreen> {
             SizedBox(width: 15),
           ],
         ),
-        body: Stack(
+        body: 
+        Stack(
           children: [
             Container(
               color: kItesoBlue,
@@ -128,7 +124,7 @@ class _OrderDetailScreen extends State<OrderDetailScreen> {
                                           ? Colors.white
                                           : Colors.black,
                                     )),
-                                Text(payment[0]['name'],
+                                Text(username.toUpperCase(),
                                     style: TextStyle(
                                       color: isDarkMode
                                           ? Colors.white
@@ -174,7 +170,7 @@ class _OrderDetailScreen extends State<OrderDetailScreen> {
                                               ? Colors.white
                                               : Colors.black,
                                           fontWeight: FontWeight.bold)),
-                                  Text("\$100.30",
+                                  Text("\$ ${widget.subtotal}",
                                       textAlign: TextAlign.end,
                                       style: TextStyle(
                                           color: isDarkMode
