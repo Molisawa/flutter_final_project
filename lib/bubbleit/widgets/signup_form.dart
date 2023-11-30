@@ -2,6 +2,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/screens/screens.dart';
+import 'package:flutter_final_project/bubbleit/screens/verification/verification_screen.dart';
 import '../screens/consts/consts.dart';
 import 'custom_textfield.dart';
 import 'custom_button.dart'; // Importa el widget CustomButton
@@ -49,7 +50,7 @@ class SignupForm extends StatelessWidget {
   }
 
   void _attemptRegistration(BuildContext context) async {
-    //primero checamos si las contraseñas sin identicas, si no, ni tiene sentido hacer el reggistration
+    // First check if the passwords match
     if (_passwordController.text != _confirmPasswordController.text) {
       Flushbar(
         title: "Error",
@@ -60,6 +61,8 @@ class SignupForm extends StatelessWidget {
       ).show(context);
       return;
     }
+
+    // Check if all fields are filled
     if (_nameController.text.isEmpty ||
         _usernameController.text.isEmpty ||
         _emailController.text.isEmpty ||
@@ -75,21 +78,42 @@ class SignupForm extends StatelessWidget {
       return;
     }
 
-    registerWithEmailAndPassword(
-            context, _emailController.text, _passwordController.text)
-        .then((registrationSuccessful) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
-      );
-    }).catchError((error) {
+    // Attempt to register the user
+    bool registrationSuccessful = await registerWithEmailAndPassword(
+        context, _emailController.text, _passwordController.text);
+
+    if (registrationSuccessful) {
+      // If registration is successful, send a verification email
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null && !user.emailVerified) {
+        await user.sendEmailVerification();
+
+        // Notify the user to check their email
+        Flushbar(
+          title: "Verificación de Email",
+          message:
+              "Se ha enviado un correo de verificación. Por favor, verifica tu cuenta.",
+          duration: const Duration(seconds: 3),
+          margin: const EdgeInsets.all(8),
+          borderRadius: BorderRadius.circular(8),
+        ).show(context);
+
+        // Navigate to the home screen or a confirmation screen if you prefer
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+              builder: (context) => const EmailVerificationScreen()),
+        );
+      }
+    } else {
+      // If registration was not successful, show an error message
       Flushbar(
-        title: "Error",
-        message: "Ha ocurrido un error: ${error.toString()}",
+        title: "Registro No Exitoso",
+        message: "Hubo un problema con el registro",
         duration: const Duration(seconds: 3),
         margin: const EdgeInsets.all(8),
         borderRadius: BorderRadius.circular(8),
       ).show(context);
-    });
+    }
   }
 
   @override

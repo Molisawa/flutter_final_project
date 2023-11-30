@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
-  
+
   static String routeName = '/map';
 
   @override
@@ -22,14 +22,15 @@ class _MapScreenState extends State<MapScreen> {
     _requestLocationPermission();
 
     markers.add(
-       Marker(
+      Marker(
         markerId: const MarkerId('branchCentral'),
         position: const LatLng(20.606872500000016, -103.4168543),
         infoWindow: const InfoWindow(
           title: 'Sucursal Central Iteso',
           snippet: 'Esta es la sucursal central de BubbleIT',
         ),
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure), // Puedes personalizar el color del marcador por defecto
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor
+            .hueAzure), // Puedes personalizar el color del marcador por defecto
       ),
     );
 
