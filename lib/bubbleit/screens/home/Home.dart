@@ -19,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int currIndex = 0;
   late PageController _pageController;
   final List<Widget> _screens = [];
+  bool isDarkMode = false;
 
   @override
   void initState() {
@@ -30,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
       const HomeContent(),
       const ShoppingCartScreen(),
       const MapScreen(),
-      const RewardsScreen(),
+      // const RewardsScreen(),
     ]);
     super.initState();
   }
@@ -58,6 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
     return Scaffold(
       backgroundColor: kItesoBlue,
       body: PageView(
@@ -73,9 +75,9 @@ class _HomeScreenState extends State<HomeScreen> {
         children: _screens,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.blue,
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.grey,
+        backgroundColor: isDarkMode ? Colors.grey[900] : Colors.white,
+        selectedItemColor: isDarkMode ? kItesoBlue : Colors.black,
+        unselectedItemColor: isDarkMode ? Colors.white : Colors.grey,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -89,10 +91,10 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(Icons.place_rounded),
             label: 'Map',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.redeem),
-            label: 'Rewards',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.redeem),
+          //   label: 'Rewards',
+          // ),
         ],
         currentIndex: currIndex,
         onTap: (index) {
