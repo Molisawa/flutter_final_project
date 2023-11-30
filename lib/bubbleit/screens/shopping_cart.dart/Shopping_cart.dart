@@ -242,6 +242,37 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   }
 }
 
+class EmptyCart extends StatelessWidget {
+  const EmptyCart({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center, // Centra verticalmente en la pantalla
+        children: [
+          Image(
+            image: AssetImage('assets/images/cartEmpty.png'),
+            width: 200,
+            height: 200,
+          ),
+          SizedBox(height: 20), // Agrega un espacio entre la imagen y el texto
+          Text(
+            'Your cart is empty',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class BottomBar extends StatelessWidget {
   const BottomBar({
     super.key,
