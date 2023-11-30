@@ -11,13 +11,13 @@ class ProductDescriptionWidget extends StatefulWidget {
   final Function(String, String, String, String) onValuesSelected;
 
   const ProductDescriptionWidget({
-    Key? key,
+    super.key,
     required this.milkOptions,
     required this.toppingOptions,
     required this.sizeOptions,
     required this.sugarOptions,
     required this.onValuesSelected,
-  }) : super(key: key);
+  });
 
   @override
   _ProductDescriptionWidgetState createState() =>

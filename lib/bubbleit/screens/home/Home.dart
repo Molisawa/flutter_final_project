@@ -1,8 +1,6 @@
 // import 'package:flutter/material.dart';
-import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_final_project/bubbleit/data/data.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 import 'package:flutter_final_project/bubbleit/screens/screens.dart';
 import 'package:flutter_final_project/bubbleit/widgets/widgets.dart';
@@ -114,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class HomeContent extends StatefulWidget {
-  const HomeContent({Key? key}) : super(key: key);
+  const HomeContent({super.key});
 
   @override
   State<HomeContent> createState() => _HomeContentState();
