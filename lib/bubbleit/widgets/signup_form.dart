@@ -2,11 +2,8 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/screens/screens.dart';
-import 'package:flutter_final_project/bubbleit/screens/sign_up/sign_up.dart';
-import 'package:flutter_final_project/bubbleit/widgets/auth_wrapper.dart';
 import '../screens/consts/consts.dart';
 import 'custom_textfield.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'custom_button.dart'; // Importa el widget CustomButton
 
 class SignupForm extends StatelessWidget {

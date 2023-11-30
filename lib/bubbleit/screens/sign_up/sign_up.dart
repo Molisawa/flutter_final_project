@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/widgets/signup_form.dart';
-import '../../widgets/login_form.dart';
 import '../consts/consts.dart';
 
 class SignupScreen extends StatefulWidget {

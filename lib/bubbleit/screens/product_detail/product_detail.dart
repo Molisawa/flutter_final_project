@@ -9,7 +9,7 @@ class ProductDetailScreen extends StatefulWidget {
   static String routeName = '/product_detail';
   final dynamic product;
 
-  ProductDetailScreen({Key? key, required this.product}) : super(key: key);
+  const ProductDetailScreen({super.key, required this.product});
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
@@ -97,10 +97,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ),
                     const SizedBox(height: 20),
                     ProductDescriptionWidget(
-                      milkOptions: ["Almendra", "Entera", "Light"],
-                      toppingOptions: ["Tapioca 1", "Tapioca 2", "Tapioca 3"],
-                      sizeOptions: ["Chico", "Mediano", "Grande"],
-                      sugarOptions: ["Sin azucar", "Moderado", "Azucar"],
+                      milkOptions: const ["Almendra", "Entera", "Light"],
+                      toppingOptions: const ["Tapioca 1", "Tapioca 2", "Tapioca 3"],
+                      sizeOptions: const ["Chico", "Mediano", "Grande"],
+                      sugarOptions: const ["Sin azucar", "Moderado", "Azucar"],
                       onValuesSelected: _updateSelectedValues,
                     ),
                   ],
@@ -114,9 +114,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               selectedValues: [_selectedMilk, _selectedTopping, _selectedSize, _selectedSugar],
           )
           else
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: const Text('Seleccione sus opciones', style: TextStyle(fontSize: 15)),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text('Seleccione sus opciones', style: TextStyle(fontSize: 15)),
             ),
         ],
       ),

@@ -6,7 +6,7 @@ import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 class ShoppingCartScreen extends StatefulWidget {
-  const ShoppingCartScreen({Key? key});
+  const ShoppingCartScreen({super.key});
   static String routeName = '/shopping_cart';
 
   @override
@@ -45,8 +45,10 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
 
   Future<Map<String, dynamic>?> getProductDetails(String productId) async {
     try {
-      final DocumentSnapshot product =
-          await FirebaseFirestore.instance.collection('products').doc(productId).get();
+      final DocumentSnapshot product = await FirebaseFirestore.instance
+          .collection('products')
+          .doc(productId)
+          .get();
 
       if (product.exists) {
         return product.data() as Map<String, dynamic>;
@@ -62,11 +64,11 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   double calculateSubtotal() {
     double total = 0.0;
     for (int i = 0; i < productsData.length; i++) {
-      total += double.parse(productsData[i]['price']) * cartBox.getAt(i)['quantity'];
+      total +=
+          double.parse(productsData[i]['price']) * cartBox.getAt(i)['quantity'];
     }
     return total;
   }
-
 
   @override
   void dispose() {
@@ -82,9 +84,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
       future: Hive.openBox('cart'),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          if(productsData.isEmpty){
+          if (productsData.isEmpty) {
             return const EmptyCart();
-
           }
           return Column(
             children: [
@@ -102,7 +103,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                         blendFactor = blendFactor.clamp(0.0, 1.0);
                         return isDarkMode
                             ? Colors.grey[900]
-                            : Color.lerp(kItesoBlueLight, kItesoBlue, blendFactor)!;
+                            : Color.lerp(
+                                kItesoBlueLight, kItesoBlue, blendFactor)!;
                       }(),
                       pinned: true,
                       elevation: 1,
@@ -123,7 +125,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                     SliverList(
                       delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                          Map<String, dynamic> productDetails = productsData[index];
+                          Map<String, dynamic> productDetails =
+                              productsData[index];
                           int itemCount = cartBox.getAt(index)['quantity'];
                           return Card(
                             shape: RoundedRectangleBorder(
@@ -143,11 +146,17 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                 Expanded(
                                   child: Padding(
                                     padding: const EdgeInsets.only(
-                                        top: 20.0, left: 20, right: 10, bottom: 20),
+                                        top: 20.0,
+                                        left: 20,
+                                        right: 10,
+                                        bottom: 20),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        Text(productDetails['name'] ?? 'Unknown Product',
+                                        Text(
+                                            productDetails['name'] ??
+                                                'Unknown Product',
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: isDarkMode
@@ -165,7 +174,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                   ),
                                 ),
                                 Container(
-                                  padding: const EdgeInsets.only(top: 100, right: 10),
+                                  padding: const EdgeInsets.only(
+                                      top: 100, right: 10),
                                   child: Row(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
@@ -193,8 +203,10 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                       IconButton(
                                         onPressed: () {
                                           // Add item to cart
-                                          cartBox.putAt(
-                                              index, {'product': productDetails['id'], 'quantity': itemCount + 1});
+                                          cartBox.putAt(index, {
+                                            'product': productDetails['id'],
+                                            'quantity': itemCount + 1
+                                          });
                                           setState(() {
                                             itemCount++;
                                           });
@@ -214,7 +226,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                   ],
                 ),
               ),
-              BottomBar(isDarkMode: isDarkMode, calculateSubtotal: calculateSubtotal),
+              BottomBar(
+                  isDarkMode: isDarkMode, calculateSubtotal: calculateSubtotal),
             ],
           );
         } else {
@@ -236,7 +249,8 @@ class EmptyCart extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center, // Centra verticalmente en la pantalla
+        mainAxisAlignment:
+            MainAxisAlignment.center, // Centra verticalmente en la pantalla
         children: [
           Image(
             image: AssetImage('assets/images/cartEmpty.png'),
@@ -260,9 +274,10 @@ class EmptyCart extends StatelessWidget {
 
 class BottomBar extends StatelessWidget {
   const BottomBar({
-    Key? key,
-    required this.isDarkMode, required this.calculateSubtotal,
-  }) : super(key: key);
+    super.key,
+    required this.isDarkMode,
+    required this.calculateSubtotal,
+  });
 
   final bool isDarkMode;
   final double Function() calculateSubtotal;
