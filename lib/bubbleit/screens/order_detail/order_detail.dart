@@ -1,6 +1,6 @@
 import 'dart:convert';
-
 import 'package:another_flushbar/flushbar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/data/payment.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
@@ -9,8 +9,11 @@ import 'package:provider/provider.dart';
 
 class OrderDetailScreen extends StatefulWidget {
   const OrderDetailScreen({
-    super.key,
+    super.key, required this.productsData, required this.quantities, required this.subtotal,
   });
+  final List<Map<String, dynamic>> productsData;
+  final List<int> quantities;
+  final double subtotal;
   static String routeName = '/order_detail';
 
   @override
@@ -24,7 +27,27 @@ class _OrderDetailScreen extends State<OrderDetailScreen> {
   @override
   void initState() {
     super.initState();
+    // print('OrderDetailScreen: ${widget.productsData}');
+    // print('OrderDetailScreen: ${widget.quantities}');
+    // print('OrderDetailScreen: ${widget.subtotal}');
+    obtenerInformacionUsuario();
     payment = jsonDecode(PaymentBubble);
+  }
+
+  void obtenerInformacionUsuario() {
+    User? usuarioActual = FirebaseAuth.instance.currentUser;
+
+    if (usuarioActual != null) {
+      print('Usuario autenticado $usuarioActual');
+      print('ID del usuario: ${usuarioActual.uid}');
+      print('Correo electrónico: ${usuarioActual.email}');
+      print('Nombre de usuario: ${usuarioActual.displayName}');
+      print('Número de teléfono: ${usuarioActual.phoneNumber}');
+      print('Foto del perfil: ${usuarioActual.photoURL}');
+      // Otros detalles del usuario según tus necesidades
+    } else {
+      print('No hay usuario autenticado');
+    }
   }
 
   @override

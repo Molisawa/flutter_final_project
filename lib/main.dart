@@ -16,7 +16,11 @@ void main() async {
   // Configuration of Hive
   final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
   await Hive.initFlutter(appDocumentDir.path);
-  await Hive.openBox('cart'); // Puedes abrir más cajas según sea necesario
+
+  // Clear values in the 'cart' box
+  await Hive.openBox('cart');
+  final cartBox = Hive.box('cart');
+  cartBox.clear();
 
   // Run the app
   runApp(const MyApp());

@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
               LoginScreen.routeName: (_) => const LoginScreen(),
               RewardsScreen.routeName: (_) => const RewardsScreen(),
               ShoppingCartScreen.routeName: (_) => const ShoppingCartScreen(),
-              OrderDetailScreen.routeName: (_) => const OrderDetailScreen(),
               SettingsScreen.routeName: (_) => const SettingsScreen()
             },
             onGenerateRoute: (settings) {

@@ -85,9 +85,10 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (productsData.isEmpty) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            // return const Center(
+            //   child: CircularProgressIndicator(),
+            // );
+            return const EmptyCart();
           }
           return Column(
             children: [
@@ -229,7 +230,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                 ),
               ),
               BottomBar(
-                  isDarkMode: isDarkMode, calculateSubtotal: calculateSubtotal),
+                  isDarkMode: isDarkMode, calculateSubtotal: calculateSubtotal, productsData: productsData, cartBox: cartBox),
             ],
           );
         } else {
@@ -278,11 +279,13 @@ class BottomBar extends StatelessWidget {
   const BottomBar({
     super.key,
     required this.isDarkMode,
-    required this.calculateSubtotal,
+    required this.calculateSubtotal, required this.productsData, required this.cartBox,
   });
 
   final bool isDarkMode;
   final double Function() calculateSubtotal;
+  final List<Map<String, dynamic>> productsData;
+  final Box cartBox;
 
   @override
   Widget build(BuildContext context) {
@@ -338,7 +341,17 @@ class BottomBar extends StatelessWidget {
               onPressed: () {
                 // Perform any action you want when the button is pressed.
                 // You can navigate to a new screen here if needed.
-                Navigator.pushNamed(context, '/order_detail');
+                // Navigator.pushNamed(context, '/order_detail');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => OrderDetailScreen(
+                      productsData: productsData,
+                      quantities: cartBox.values.map<int>((item) => item['quantity'] as int).toList(),
+                      subtotal: calculateSubtotal(),
+                    ),
+                  ),
+                );
               },
               child: const Text('Go to pay',
                   style: TextStyle(
@@ -353,3 +366,4 @@ class BottomBar extends StatelessWidget {
     );
   }
 }
+
