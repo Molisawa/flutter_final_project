@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/data/payment.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 import 'package:flutter_final_project/bubbleit/screens/screens.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 class OrderDetailScreen extends StatefulWidget {
@@ -284,19 +285,72 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                           ),
                         ),
                         onPressed: () {
-                          _isOrderPlaced
-                              ? null
-                              : Flushbar(
-                                  title: 'Order Placed',
-                                  message: 'Your order has been placed',
-                                  duration: const Duration(seconds: 3),
-                                  backgroundColor: kItesoBlue,
-                                  margin: const EdgeInsets.all(8),
-                                  borderRadius: BorderRadius.circular(8),
-                                ).show(context);
-                          setState(() {
-                            _isOrderPlaced = true;
-                          });
+                          if (!_isOrderPlaced) {
+                            GlobalKey<State> _keyLoader = GlobalKey<State>();
+
+                            showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return Dialog(
+                                  key: _keyLoader,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(20),
+                                    child: const Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        CircularProgressIndicator(),
+                                        SizedBox(width: 20),
+                                        Text("Processing..."),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                            final cartBox = Hive.box('cart');
+                            cartBox.clear();
+                            setState(() {
+                              _isOrderPlaced = true;
+                            });
+
+                            Future.delayed(const Duration(seconds: 3), () {
+                              (context as Element).reassemble();
+
+                              showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (BuildContext context) {
+                                    return Dialog(
+                                      child: Container(
+                                        padding: const EdgeInsets.all(20),
+                                        child: const Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Icon(Icons.check_circle,
+                                                color: Colors.green),
+                                            SizedBox(width: 20),
+                                            Text(
+                                              "Order Placed Successfully",
+                                              style: TextStyle(
+                                                  color: Colors.green),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  });
+                              Future.delayed(const Duration(seconds: 1), () {
+                                Navigator.of(context)
+                                    .pop(); // Dismiss the dialog
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const HomeScreen()), // Replace with your HomeScreen route
+                                );
+                              });
+                            });
+                          }
                         },
                         child: const Text('Place order',
                             style: TextStyle(
