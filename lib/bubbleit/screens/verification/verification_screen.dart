@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_final_project/bubbleit/screens/home/Home.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
-  const EmailVerificationScreen({Key? key}) : super(key: key);
+  const EmailVerificationScreen({super.key});
 
   @override
   _EmailVerificationScreenState createState() =>
@@ -15,7 +15,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   void initState() {
     super.initState();
     // Periodically check if the user has verified their email
-    Future.delayed(Duration(seconds: 3), checkEmailVerified);
+    Future.delayed(const Duration(seconds: 3), checkEmailVerified);
   }
 
   Future<void> checkEmailVerified() async {
@@ -38,23 +38,23 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Verificar Email'),
+        title: const Text('Verificar Email'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
+            const Text(
               'Por favor, revisa tu correo electrónico y confirma tu cuenta.',
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 // Manually check if the user has verified their email
                 checkEmailVerified();
               },
-              child: Text('He confirmado mi correo'),
+              child: const Text('He confirmado mi correo'),
             ),
           ],
         ),

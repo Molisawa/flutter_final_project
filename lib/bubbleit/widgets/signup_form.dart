@@ -1,7 +1,6 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_final_project/bubbleit/screens/screens.dart';
 import 'package:flutter_final_project/bubbleit/screens/verification/verification_screen.dart';
 import '../screens/consts/consts.dart';
 import 'custom_textfield.dart';
