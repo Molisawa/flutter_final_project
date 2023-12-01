@@ -1,7 +1,6 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_final_project/bubbleit/screens/screens.dart';
 import 'package:flutter_final_project/bubbleit/screens/verification/verification_screen.dart';
 import '../screens/consts/consts.dart';
 import 'custom_textfield.dart';
@@ -16,7 +15,6 @@ class SignupForm extends StatelessWidget {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
-// o sea al chile si es medio inecesaria pero como ya me puse a haer que la otra sea promesa, ya ni pedo
   Future<bool> registerWithEmailAndPassword(
       BuildContext context, String email, String password) async {
     try {
@@ -32,14 +30,26 @@ class SignupForm extends StatelessWidget {
       return userCredential.user != null;
     } on FirebaseAuthException catch (e) {
       // Handle different Firebase Auth errors, such as email already in use
-      Flushbar(
-        title: "Error de Autenticación",
-        message: e.message ?? "Error desconocido",
-        duration: const Duration(seconds: 3),
-        margin: const EdgeInsets.all(8),
-        borderRadius: BorderRadius.circular(8),
-      ).show(context);
-      return false;
+
+      if (e.code == 'email-already-in-use') {
+        Flushbar(
+          title: "Oops!",
+          message: "Parece que ya tienes una cuenta con nosotros",
+          duration: const Duration(seconds: 3),
+          margin: const EdgeInsets.all(8),
+          borderRadius: BorderRadius.circular(8),
+        ).show(context);
+        return false;
+      } else {
+        Flushbar(
+          title: "Error de Autenticación",
+          message: e.message ?? "Error desconocido",
+          duration: const Duration(seconds: 3),
+          margin: const EdgeInsets.all(8),
+          borderRadius: BorderRadius.circular(8),
+        ).show(context);
+        return false;
+      }
     } catch (e) {
       // Handle any other errors
       Flushbar(
@@ -108,15 +118,6 @@ class SignupForm extends StatelessWidget {
               builder: (context) => const EmailVerificationScreen()),
         );
       }
-    } else {
-      // If registration was not successful, show an error message
-      Flushbar(
-        title: "Registro No Exitoso",
-        message: "Hubo un problema con el registro",
-        duration: const Duration(seconds: 3),
-        margin: const EdgeInsets.all(8),
-        borderRadius: BorderRadius.circular(8),
-      ).show(context);
     }
   }
 
