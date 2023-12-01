@@ -6,6 +6,7 @@ import 'package:flutter_final_project/bubbleit/data/payment.dart';
 import 'package:flutter_final_project/bubbleit/screens/consts/color_palette.dart';
 import 'package:flutter_final_project/bubbleit/screens/screens.dart';
 import 'package:provider/provider.dart';
+import 'package:hive/hive.dart';
 
 class OrderDetailScreen extends StatefulWidget {
   const OrderDetailScreen({
@@ -294,6 +295,11 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                                   margin: const EdgeInsets.all(8),
                                   borderRadius: BorderRadius.circular(8),
                                 ).show(context);
+
+                                // Borrar el carrito de compras (Hive)
+                                final cartBox = Hive.box('cart');
+                                cartBox.clear();
+
                           setState(() {
                             _isOrderPlaced = true;
                           });
